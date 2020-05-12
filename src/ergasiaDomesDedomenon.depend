@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1585344784 source:c:\users\user\documents\github\tree-avltree-hashtable-implementation\src\main.cpp
+	<iostream>
+	"BST.h"
+
+1585344741 source:c:\users\user\documents\github\tree-avltree-hashtable-implementation\src\bst.cpp
+	<iostream>
+	<string.h>
+	"BST.h"
+
+1585345760 c:\users\user\documents\github\tree-avltree-hashtable-implementation\src\bst.h
+	<string.h>
+
