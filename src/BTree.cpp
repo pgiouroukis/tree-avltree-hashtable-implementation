@@ -13,13 +13,15 @@ BTree::~BTree()
     //dtor
 }
 
-Node* newNode(string w, Node* parent) {
+Node* newNode(string w, Node* parent)
+{
     Node *node = new Node;
     node->word = w;
     node->occurences = 1;
     node->leftNode = nullptr;
     node->rightNode = nullptr;
     node->parentNode = parent;
+    node->height = ( parent!=nullptr ? parent->height + 1 : 0 );
     return node;
 
 }
@@ -29,6 +31,7 @@ Node* BTree::addWord(string w) {
     if (root == nullptr) {
         Node *node = newNode(w, nullptr);
         root = node;
+        return node;
     } else {
 
         Node *ptr = root;
@@ -37,9 +40,11 @@ Node* BTree::addWord(string w) {
         while( flag ) {
 
             if( w.compare(ptr->word) == 0) {
+                //cout<<w<<"="<<ptr->word<<endl;
                 ptr->occurences++;
                 return ptr;
             } else if (w.compare(ptr->word) < 0) {
+                //cout<<w<<"<"<<ptr->word<<endl;
                 if (ptr->leftNode != nullptr) {
                     ptr = ptr->leftNode;
                 } else {
@@ -48,6 +53,7 @@ Node* BTree::addWord(string w) {
                     return ptr->leftNode;
                 }
             } else {
+                //cout<<w<<">"<<ptr->word<<endl;
                 if (ptr->rightNode != nullptr) {
                     ptr = ptr->rightNode;
                 } else {
@@ -59,7 +65,7 @@ Node* BTree::addWord(string w) {
         }
 
     }
-
+    return nullptr;
 }
 
 Node* BTree::findWord(string w) {
@@ -69,6 +75,7 @@ Node* BTree::findWord(string w) {
 
     while ( !found && ptr!=nullptr ) {
         if (w.compare(ptr->word) == 0) {
+            std::cout<<"ok"<<endl;
             found = true;
             return ptr;
         } else if (w.compare(ptr->word) < 0) {
@@ -80,7 +87,7 @@ Node* BTree::findWord(string w) {
     if (!found) {
         return nullptr;
     }
-
+    return nullptr;
 }
 
 bool BTree::deleteWord(string w) {
@@ -142,12 +149,13 @@ bool BTree::deleteWord(string w) {
                     //to ptr einai deksi paidi toy patera toy
                     ptr->parentNode->rightNode = childPtr;
                 }
+                childPtr->parentNode = ptr->parentNode;
             } else {
                 //ama o ptr den exei patera, tote einai to root node
                 //ara prepei na theso to childPtr os root
                 root = childPtr;
+                childPtr->parentNode = nullptr;
             }
-
             //apodesmeuo ton xoro toy ptr
             delete ptr;
 
@@ -166,15 +174,18 @@ bool BTree::deleteWord(string w) {
 
             //prosoxi!!! to stoixeio auto (tptr) den mporei na exei aristero paidi (giati telika tha kataligame ekei)
             //omos mporei na exei deksi paidi. to deksi auto paidi toy prepei na to valoyme telika os aristero paidi toy gonea toy tptr.
-            if (tptr->rightNode!=nullptr) {
-                tptr->parentNode->leftNode = tptr->rightNode;
-            } else {
-                tptr->parentNode->leftNode = nullptr;
+            //prepei omos prota na eleksoume oti to tptr den einai to deksi paidi toy ptr, allios to parapano den isxyei
+            if (ptr->rightNode != tptr) {
+                if (tptr->rightNode!=nullptr) {
+                    tptr->parentNode->leftNode = tptr->rightNode;
+                } else {
+                    tptr->parentNode->leftNode = nullptr;
+                }
             }
 
             //metafero to tptr sthn thesi toy ptr
             tptr->leftNode = ptr->leftNode;
-            tptr->rightNode= ptr->rightNode;
+            if (ptr->rightNode != tptr)     tptr->rightNode= ptr->rightNode;
             tptr->parentNode = ptr->parentNode;
 
             //enimerono ton patera toy ptr, afou pleon prepei na deixnei sto tptr. (efoson yparxei, mporei to ptr na einai riza)
@@ -247,7 +258,7 @@ void postOrder(Node *n) {
 
 void BTree::printPostOrder() {
 
-    std::cout << "Starting inOrder Traversal..." << endl;
+    std::cout << "Starting postOrder Traversal..." << endl;
 
     postOrder(root);
 
@@ -285,4 +296,3 @@ void BTree::printPreOrder() {
 
 
 /* -------------------------------------------------------------------------------- */
-

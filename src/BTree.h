@@ -10,6 +10,7 @@ struct Node {
     Node *leftNode;
     Node *rightNode;
     Node *parentNode;
+    int height;
 };
 
 class BTree
@@ -20,7 +21,7 @@ class BTree
 
         Node* getRoot() {return root;}
 
-        Node* addWord(string w);
+        virtual Node* addWord(string w);
         Node* findWord(string w);
         bool deleteWord(string w);
 
@@ -28,10 +29,12 @@ class BTree
         void printPostOrder();
         void printPreOrder();
 
+        Node *root;
+
     protected:
 
     private:
-        Node *root;
+
 };
 
 #endif // BTREE_H

@@ -3,23 +3,33 @@
 #include <fstream>
 #include <chrono>
 
+#include "AVLTree.h"
 #include "BTree.h"
+#include "Hashtable.h"
+
+#include "TestClass.h"
 
 using namespace std;
 
 int main()
 {
-
+    Hashtable a(500000);
     BTree tree;
-    Node *node;
+    AVLTree atree;
 
-    ifstream file("sampleText.txt");
-    string linestr;
+    int sum = 0;
+
+    ifstream file("small-file.txt");
+    std::string linestr;
     string word;
-    bool flag;
 
-    auto start = chrono::high_resolution_clock::now();
+    int line = 1;
+
     while ( getline(file, linestr) ) {
+        if ( line%1000==0) cout<<line<<endl;
+        line++;
+        linestr.append(".");
+
         word = "";
         for (int i = 0 ; i < linestr.length() ; i++) {
             if ( isalpha(linestr[i]) ) {
@@ -27,34 +37,42 @@ int main()
                 if( i==linestr.length()-1) {
                     //cout<< word << endl;
                     word="";
+                    sum++;
                 }
             } else {
                 if (word!="") {
                     //cout<<word<<endl;
-                    tree.addWord(word);
+                    //tree.addWord(word);
+                    atree.addWord(word);
+                    //a.addWord(word);
+                   // cout<<sum<<endl;
+
+                    //a.place(word);
+                    sum++;
+
                 } else continue;
                 word = "";
             }
         }
     }
-    auto stop = chrono::high_resolution_clock::now();
-    auto duration = chrono::duration_cast<chrono::nanoseconds>(stop - start);
-    cout << "text read duration: " << duration.count() << endl <<endl;
+
+    /*
+    atree.addWord("the");
+    atree.addWord("project");
+    atree.addWord("gutenberg");
+    atree.addWord("eBook");
+    atree.addWord("of");
+    atree.addWord("the");
+    atree.addWord("kostas");
+    */
+    //atree.test(atree.getRoot());
+
+    //atree.printPostOrder();*/
 
 
+    //cout<<sum<<endl;
 
-    //tree.printPostOrder();
-
-    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-
-    node = tree.findWord("without");
-
-    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-    std::cout << "Word find duration = " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << "[ns]" << std::endl;
-
-    //cout << "duration find: "<<duration.count() << endl;
-
-    cout << "Word found. Occurences: "<<node->occurences << endl;
+    atree.findWord("The");
 
 
     return 0;
