@@ -7,8 +7,6 @@
 #include "BTree.h"
 #include "Hashtable.h"
 
-#include "TestClass.h"
-
 using namespace std;
 
 int main()
@@ -16,6 +14,9 @@ int main()
     Hashtable a(500000);
     BTree tree;
     AVLTree atree;
+
+    string *Q;
+    Q = new string[5];
 
     int sum = 0;
 
@@ -26,7 +27,7 @@ int main()
     int line = 1;
 
     while ( getline(file, linestr) ) {
-        if ( line%1000==0) cout<<line<<endl;
+        //if ( line%1000==0) cout<<line<<endl;
         line++;
         linestr.append(".");
 
@@ -43,8 +44,9 @@ int main()
                 if (word!="") {
                     //cout<<word<<endl;
                     //tree.addWord(word);
-                    atree.addWord(word);
-                    //a.addWord(word);
+                    //atree.addWord(word);
+                    tree.addWord(word);
+                    a.addWord(word);
                    // cout<<sum<<endl;
 
                     //a.place(word);
@@ -55,25 +57,23 @@ int main()
             }
         }
     }
-
     /*
-    atree.addWord("the");
-    atree.addWord("project");
-    atree.addWord("gutenberg");
-    atree.addWord("eBook");
-    atree.addWord("of");
-    atree.addWord("the");
-    atree.addWord("kostas");
-    */
+    atree.addWord("the");           atree.printInOrder();
+    atree.addWord("project");       atree.printInOrder();
+    atree.addWord("gutenberg");     atree.printInOrder();
+    atree.addWord("eBook");         atree.printInOrder();
+    atree.addWord("of");            atree.printInOrder();
+    atree.addWord("the");           atree.printInOrder();
+    atree.addWord("kostas");        atree.printInOrder();
+
+
     //atree.test(atree.getRoot());
 
-    //atree.printPostOrder();*/
+    //atree.printPostOrder();
+    */
 
-
-    //cout<<sum<<endl;
-
-    atree.findWord("The");
-
+    tree.findWord("him");
+    a.findWord("him");
 
     return 0;
 }

@@ -14,7 +14,7 @@ class AVLTree : public BTree
         AVLTree() {}
         virtual ~AVLTree() {}
 
-        void test(Node* node);
+        void test();
 
         Node* addWord(string word);
 

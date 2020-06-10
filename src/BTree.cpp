@@ -75,7 +75,7 @@ Node* BTree::findWord(string w) {
 
     while ( !found && ptr!=nullptr ) {
         if (w.compare(ptr->word) == 0) {
-            std::cout<<"ok"<<endl;
+            std::cout<<"occurences: "<< ptr->occurences << endl;
             found = true;
             return ptr;
         } else if (w.compare(ptr->word) < 0) {
@@ -222,7 +222,7 @@ void inOrder(Node *n) {
 
     inOrder(n->leftNode);
 
-    cout << "Word: " << n->word << " | Occurences: " << n->occurences << endl;
+    cout << "Word: " << n->word << " | Occurences: " << n->occurences << " | Height: " << n->height << endl;
 
     inOrder(n->rightNode);
 
