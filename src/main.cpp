@@ -78,7 +78,7 @@ int main() {
     Node *node1,*node2;
     TextTable t('-', '|', '+');
     t.add("Word");t.add("Hashtable occs");t.add("AVL occs");t.add("BTRee occs");t.endOfRow();
-    for (i = 0; i < QSIZE; i+=100) {
+    for (i = 0; i < QSIZE; i+=10) {
 
         t.add(" Word: " + Q[i]);
 

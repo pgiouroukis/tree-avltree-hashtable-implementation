@@ -24,12 +24,22 @@
 1591877134 /home/phillipos/Documents/GitHub/tree-avltree-hashtable-implementation/src/Hashtable.h
 	<string>
 
-1591878055 source:/home/phillipos/Documents/GitHub/tree-avltree-hashtable-implementation/src/main.cpp
+1591879451 source:/home/phillipos/Documents/GitHub/tree-avltree-hashtable-implementation/src/main.cpp
 	<iostream>
 	<string>
 	<fstream>
 	<chrono>
+	<iostream>
 	"AVLTree.h"
 	"BTree.h"
 	"Hashtable.h"
+	"TextTable.h"
+
+1591879385 /home/phillipos/Documents/GitHub/tree-avltree-hashtable-implementation/src/TextTable.h
+	<iostream>
+	<map>
+	<iomanip>
+	<vector>
+	<string>
+	<clocale>
 
