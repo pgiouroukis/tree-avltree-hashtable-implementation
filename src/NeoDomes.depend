@@ -43,3 +43,47 @@
 	<string>
 	<clocale>
 
+1591865180 source:c:\users\user\documents\github\tree-avltree-hashtable-implementation\src\avltree.cpp
+	"AVLTree.h"
+	<cmath>
+
+1591865187 c:\users\user\documents\github\tree-avltree-hashtable-implementation\src\avltree.h
+	<iostream>
+	<string>
+	"BTree.h"
+
+1591865355 c:\users\user\documents\github\tree-avltree-hashtable-implementation\src\btree.h
+	<string>
+
+1591873382 source:c:\users\user\documents\github\tree-avltree-hashtable-implementation\src\btree.cpp
+	"BTree.h"
+	<string>
+	<iostream>
+
+1591876253 source:c:\users\user\documents\github\tree-avltree-hashtable-implementation\src\hashtable.cpp
+	"Hashtable.h"
+	<string>
+	<iostream>
+
+1591876262 c:\users\user\documents\github\tree-avltree-hashtable-implementation\src\hashtable.h
+	<string>
+
+1591883040 source:c:\users\user\documents\github\tree-avltree-hashtable-implementation\src\main.cpp
+	<iostream>
+	<string>
+	<fstream>
+	<chrono>
+	<iostream>
+	"AVLTree.h"
+	"BTree.h"
+	"Hashtable.h"
+	"TextTable.h"
+
+1591878673 c:\users\user\documents\github\tree-avltree-hashtable-implementation\src\texttable.h
+	<iostream>
+	<map>
+	<iomanip>
+	<vector>
+	<string>
+	<clocale>
+

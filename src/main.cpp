@@ -32,12 +32,19 @@ int main() {
 
     string linestr;
     string word;
-    int line = 1;
+    int line = 0;
+    int loaderCount=0;
 
     while ( getline(file, linestr) ) {
+        if (line % 10000 == 0) {
+            loaderCount++;
+            cout << '\r' << flush;
+            cout << "Reading the words... |" ;
+            for (int i=0;i<6;i++) if (i<loaderCount) cout << "+++++"; else cout << "     ";
+            cout << "|  ";
+        }
         line++;
         linestr.append(".");
-
         word = "";
 
         for (i=0; i<linestr.length(); i++) {
