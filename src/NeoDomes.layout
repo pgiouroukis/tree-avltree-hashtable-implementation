@@ -2,24 +2,19 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="BTree.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1860" topLine="0" />
-		</Cursor>
-	</File>
 	<File name="BTree.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="203" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="Hashtable.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3654" topLine="49" />
+			<Cursor1 position="866" topLine="16" />
 		</Cursor>
 	</File>
-	<File name="AVLTree.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="BTree.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="74" topLine="0" />
+			<Cursor1 position="1860" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="AVLTree.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -32,6 +27,16 @@
 			<Collapse line="56" />
 		</Folding>
 	</File>
+	<File name="Hashtable.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3654" topLine="49" />
+		</Cursor>
+	</File>
+	<File name="AVLTree.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="74" topLine="0" />
+		</Cursor>
+	</File>
 	<File name="TestClass.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="138" topLine="0" />
@@ -42,10 +47,4 @@
 			<Cursor1 position="341" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1678" topLine="80" />
-		</Cursor>
-	</File>
-	<EditorTabsLayout layout="e7b072b05ee21e7e009a7e0700000002=*0;NeoDomes:main.cpp,1;NeoDomes:AVLTree.cpp,2;NeoDomes:Hashtable.cpp,3;NeoDomes:BTree.cpp,4;NeoDomes:BTree.h,5;NeoDomes:AVLTree.h@layout2|name=dummy;caption=;state=2098174;dir=3;layer=0;row=0;pos=0;prop=100000;bestw=776;besth=424;minw=776;minh=424;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=e7b072b05ee21e7e009a7e0700000002;caption=;state=2098172;dir=5;layer=0;row=0;pos=0;prop=100000;bestw=200;besth=200;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|dock_size(5,0,0)=202|" />
 </CodeBlocks_layout_file>
