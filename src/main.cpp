@@ -13,17 +13,14 @@
 
 using namespace std;
 
-bool addToQ(int sum, int WordsInQ) {
-    if (!(sum % 22) && WordsInQ < QSIZE)
-        return true;
-    return false;
-}
-
+bool addToQ(int sum, int WordsInQ);
+void printSomeOccurences(int step, string*, Hashtable*, AVLTree*, BTree*);
+void printTimeComparison(string *, Hashtable *, AVLTree *, BTree *);
 
 int main() {
-    Hashtable a(500000);
-    BTree tree;
-    AVLTree atree;
+    Hashtable hashtable(500000);
+    BTree bTree;
+    AVLTree avlTree;
 
     string *Q = new string[QSIZE];
     int WordsInQ=0;
@@ -37,33 +34,24 @@ int main() {
     string word;
     int line = 1;
 
-    std::chrono::steady_clock::time_point begin;
-    std::chrono::steady_clock::time_point end;
-
     while ( getline(file, linestr) ) {
         line++;
         linestr.append(".");
 
         word = "";
 
-        for (i=0; i<linestr.length(); i++)
-        {
+        for (i=0; i<linestr.length(); i++) {
             if (isalpha(linestr[i]))
-            {
                 word.append(string(1,linestr[i]));
-            }
-            else
-            {
-                if (word!="")
-                {
-                    tree.addWord(word);
-                    atree.addWord(word);
-                    a.addWord(word);
+            else {
+                if (word!="") {
+                    bTree.addWord(word);
+                    avlTree.addWord(word);
+                    hashtable.addWord(word);
 
                     sum++;
 
-                    if (addToQ(sum,WordsInQ))
-                    {
+                    if (addToQ(sum,WordsInQ)) {
                         WordsInQ++;
                         Q[WordsInQ-1]=word;
                     }
@@ -74,47 +62,75 @@ int main() {
         }
     }
 
-    int num;
-    Node *node1,*node2;
-    TextTable t('-', '|', '+');
-    t.add("Word");t.add("Hashtable occs");t.add("AVL occs");t.add("BTRee occs");t.endOfRow();
-    for (i = 0; i < QSIZE; i+=10) {
+    printSomeOccurences(100, Q, &hashtable, &avlTree, &bTree);
 
-        t.add(" Word: " + Q[i]);
+    cout << "------------------------------------" << endl;
 
-        num = a.findWord(Q[i]);
-        t.add(" Hash Occs: " + to_string(num));
+    printTimeComparison(Q, &hashtable, &avlTree, &bTree);
 
-        node1 = atree.findWord(Q[i]);
-        t.add(" AVL Occs: " + to_string(node1->occurences));
-
-        node2 = tree.findWord(Q[i]);
-        t.add(" BTree Occs: " + to_string(node2->occurences));
-        t.endOfRow();
-    }
-    //t.setAlignment(2, TextTable::Alignment::LEFT);
-    cout << t << endl;
-    cout << "----------------------------------------------------------------------------------------------" << endl;
+    return 0;
+}
 
 
+
+void printTimeComparison(string *Q, Hashtable *a, AVLTree *atree, BTree *tree) {
+
+    std::chrono::steady_clock::time_point begin;
+    std::chrono::steady_clock::time_point end;
+
+    //measure the time for the AVL Tree
     begin = std::chrono::steady_clock::now();
-    for (i = 0; i < QSIZE; i++)
-        a.findWord(Q[i]);
-    end = std::chrono::steady_clock::now();
-    cout << "Time In HashTable : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
-
-    begin = std::chrono::steady_clock::now();
-    for (i = 0; i < QSIZE; i++)
-        atree.findWord(Q[i]);
+    for (int i = 0; i < QSIZE; i++)
+        atree->findWord(Q[i]);
     end = std::chrono::steady_clock::now();
     cout << "Time In AVL Tree : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
 
+    //measure the time for the Hashtable
     begin = std::chrono::steady_clock::now();
-    for (i = 0; i < QSIZE; i++)
-        tree.findWord(Q[i]);
+    for (int i = 0; i < QSIZE; i++)
+        a->findWord(Q[i]);
+    end = std::chrono::steady_clock::now();
+    cout << "Time In HashTable : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
+
+    //measure the time for the Binary Search Tree
+    begin = std::chrono::steady_clock::now();
+    for (int i = 0; i < QSIZE; i++)
+        tree->findWord(Q[i]);
     end = std::chrono::steady_clock::now();
     cout << "Time In Binary Search Tree : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
 
+}
 
-    return 0;
+void printSomeOccurences(int step, string *Q, Hashtable *a, AVLTree *atree, BTree *tree) {
+    int num;
+    Node *node1, *node2;
+    TextTable t('-', '|', '+');
+    t.add("Word");
+    t.add("Hashtable occs");
+    t.add("AVL occs");
+    t.add("BTRee occs");
+    t.endOfRow();
+    for (int i = 0; i < QSIZE; i += step)
+    {
+
+        t.add(" Word: " + Q[i]);
+
+        num = a->findWord(Q[i]);
+        t.add(" Hash Occs: " + to_string(num));
+
+        node1 = atree->findWord(Q[i]);
+        t.add(" AVL Occs: " + to_string(node1->occurences));
+
+        node2 = tree->findWord(Q[i]);
+        t.add(" BTree Occs: " + to_string(node2->occurences));
+        t.endOfRow();
+    }
+    cout << t << endl;
+    return;
+}
+
+bool addToQ(int sum, int WordsInQ) {
+    if (!(sum % 22) && WordsInQ < QSIZE)
+        return true;
+    return false;
 }
