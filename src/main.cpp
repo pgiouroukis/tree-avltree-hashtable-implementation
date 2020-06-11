@@ -2,9 +2,12 @@
 #include <string>
 #include <fstream>
 #include <chrono>
+#include <iostream>
+
 #include "AVLTree.h"
 #include "BTree.h"
 #include "Hashtable.h"
+#include "TextTable.h"
 
 #define QSIZE 10000
 
@@ -73,16 +76,26 @@ int main() {
 
     int num;
     Node *node1,*node2;
-    string out;
-    for (i = 0; i < QSIZE; i+=10) {
-        out.append("\n");
-        out.append("Word: " + Q[i]);
-        num = a.findWord(Q[i]);         out.append("| Hashtable Occs: " +  to_string(num));
-        node1 = atree.findWord(Q[i]);   out.append("| AVLTree   Occs: " + to_string(node1->occurences));
-        node2 = tree.findWord(Q[i]);    out.append("| BTree     Occs: " + to_string(node2->occurences));
+    TextTable t('-', '|', '+');
+    t.add("Word");t.add("Hashtable occs");t.add("AVL occs");t.add("BTRee occs");t.endOfRow();
+    for (i = 0; i < QSIZE; i+=100) {
+
+        t.add(" Word: " + Q[i]);
+
+        num = a.findWord(Q[i]);
+        t.add(" Hashtable Occs: " + to_string(num));
+
+        node1 = atree.findWord(Q[i]);
+        t.add(" AVLTree Occs: " + to_string(node1->occurences));
+
+        node2 = tree.findWord(Q[i]);
+        t.add(" BTree Occs: " + to_string(node2->occurences));
+        t.endOfRow();
     }
-    cout << out << endl;
+    //t.setAlignment(2, TextTable::Alignment::LEFT);
+    cout << t << endl;
     cout << "----------------------------------------------------------------------------------------------" << endl;
+
 
     begin = std::chrono::steady_clock::now();
     for (i = 0; i < QSIZE; i++)
@@ -105,4 +118,3 @@ int main() {
 
     return 0;
 }
-
