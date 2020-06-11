@@ -78,7 +78,7 @@ bool Hashtable::findWord(string A_word)
 
         if (A[startPos]=="-")      //If the hash position of the word is empty then then there is no way the word is in this array, thus the search
             {                     // is unsuccesful
-                cout<<"Word " << A_word << " not found!"<<endl;
+                //cout<<"Word " << A_word << " not found!"<<endl;
                 return false;
             }
 
@@ -87,7 +87,7 @@ bool Hashtable::findWord(string A_word)
 
             if (A[i]==A_word) //If the word is in its hash posistion then we print the appropriate message
             {
-                cout<<"The word "<<A_word<<" was found in position "<<i<<", "<<B[i]<<" times."<<endl;
+                //cout<<"The word "<<A_word<<" was found in position "<<i<<", "<<B[i]<<" times."<<endl;
                 return true;
             }
             else
@@ -99,7 +99,7 @@ bool Hashtable::findWord(string A_word)
 
                 if (i==startPos) //Finally if the program does a full circle and still did not find the word, then the search was unsuccesfull
                 {
-                    cout<<"Word " << A_word << " not found!"<<endl;
+                    //cout<<"Word " << A_word << " not found!"<<endl;
                     return false;
                 }
             }

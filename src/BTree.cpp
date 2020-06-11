@@ -76,7 +76,7 @@ Node* BTree::findWord(string w) {
 
     while ( !found && ptr!=nullptr ) {
         if (w.compare(ptr->word) == 0) {
-            std::cout<<"occurences: " << ptr->occurences <<endl;
+            //std::cout<<"occurences: " << ptr->occurences <<endl;
             found = true;
             return ptr;
         } else if (w.compare(ptr->word) < 0) {
