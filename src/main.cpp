@@ -83,10 +83,10 @@ int main() {
         t.add(" Word: " + Q[i]);
 
         num = a.findWord(Q[i]);
-        t.add(" Hashtable Occs: " + to_string(num));
+        t.add(" Hash Occs: " + to_string(num));
 
         node1 = atree.findWord(Q[i]);
-        t.add(" AVLTree Occs: " + to_string(node1->occurences));
+        t.add(" AVL Occs: " + to_string(node1->occurences));
 
         node2 = tree.findWord(Q[i]);
         t.add(" BTree Occs: " + to_string(node2->occurences));
