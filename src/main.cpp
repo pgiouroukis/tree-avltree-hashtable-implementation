@@ -11,7 +11,7 @@
 using namespace std;
 
 bool addToQ(int sum, int WordsInQ) {
-    if (!(sum % 23) && WordsInQ < QSIZE)
+    if (!(sum % 22) && WordsInQ < QSIZE)
         return true;
     return false;
 }
@@ -29,7 +29,7 @@ int main() {
     unsigned int i;
 
     ifstream file("small-file.txt");
-    
+
     string linestr;
     string word;
     int line = 1;
@@ -74,15 +74,16 @@ int main() {
     int num;
     Node *node1,*node2;
     string out;
-    for (i = 0; i < QSIZE; i++) {
+    for (i = 0; i < QSIZE; i+=10) {
         out.append("\n");
         out.append("Word: " + Q[i]);
         num = a.findWord(Q[i]);         out.append("| Hashtable Occs: " +  to_string(num));
         node1 = atree.findWord(Q[i]);   out.append("| AVLTree   Occs: " + to_string(node1->occurences));
         node2 = tree.findWord(Q[i]);    out.append("| BTree     Occs: " + to_string(node2->occurences));
-    } 
+    }
     cout << out << endl;
     cout << "----------------------------------------------------------------------------------------------" << endl;
+
     begin = std::chrono::steady_clock::now();
     for (i = 0; i < QSIZE; i++)
         a.findWord(Q[i]);
