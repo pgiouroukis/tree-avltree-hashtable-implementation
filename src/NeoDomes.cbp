@@ -40,10 +40,8 @@
 		<Unit filename="BTree.h" />
 		<Unit filename="Hashtable.cpp" />
 		<Unit filename="Hashtable.h" />
+		<Unit filename="TestClass.h" />
 		<Unit filename="main.cpp" />
-		<Extensions>
-			<code_completion />
-			<debugger />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

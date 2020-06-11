@@ -33,12 +33,12 @@
 	"AVLTree.h"
 	<cmath>
 
-1591777479 source:c:\users\user\desktop\ergasiadomes\neodomes\btree.cpp
+1591861977 source:c:\users\user\desktop\ergasiadomes\neodomes\btree.cpp
 	"BTree.h"
 	<string>
 	<iostream>
 
-1591777333 c:\users\user\desktop\ergasiadomes\neodomes\btree.h
+1591858557 c:\users\user\desktop\ergasiadomes\neodomes\btree.h
 	<string>
 
 1591602822 source:c:\users\user\desktop\ergasiadomes\neodomes\hashtable.cpp
@@ -49,22 +49,21 @@
 1591233364 c:\users\user\desktop\ergasiadomes\neodomes\hashtable.h
 	<string>
 
-1591778413 source:c:\users\user\desktop\ergasiadomes\neodomes\main.cpp
+1591862311 source:c:\users\user\desktop\ergasiadomes\neodomes\main.cpp
 	<iostream>
 	<string>
 	<fstream>
 	<chrono>
-	"AVLTree.h"
 	"BTree.h"
+	"AVLTree.h"
 	"Hashtable.h"
-	"TestClass.h"
 
-1590889618 c:\users\user\desktop\ergasiadomes\neodomes\avltree.h
+1591858293 c:\users\user\desktop\ergasiadomes\neodomes\avltree.h
 	<iostream>
 	<string>
 	"BTree.h"
 
-1591778388 source:c:\users\user\desktop\ergasiadomes\neodomes\avltree.cpp
+1591862279 source:c:\users\user\desktop\ergasiadomes\neodomes\avltree.cpp
 	"AVLTree.h"
 	<cmath>
 
@@ -74,37 +73,11 @@
 	<sstream>
 	<algorithm>
 
-1591784615 source:c:\users\user\documents\github\tree-avltree-hashtable-implementation\src\btree.cpp
-	"BTree.h"
-	<string>
-	<iostream>
+1591858264 c:\users\user\desktop\ergasiadomes\neodomes\utils.h
 
-1591777333 c:\users\user\documents\github\tree-avltree-hashtable-implementation\src\btree.h
-	<string>
-
-1591602822 source:c:\users\user\documents\github\tree-avltree-hashtable-implementation\src\hashtable.cpp
-	"Hashtable.h"
-	<string>
-	<iostream>
-
-1591233364 c:\users\user\documents\github\tree-avltree-hashtable-implementation\src\hashtable.h
-	<string>
-
-1591785983 source:c:\users\user\documents\github\tree-avltree-hashtable-implementation\src\main.cpp
+1591858258 source:c:\users\user\desktop\ergasiadomes\neodomes\utils.cpp
 	<iostream>
 	<string>
-	<fstream>
-	<chrono>
-	"AVLTree.h"
-	"BTree.h"
-	"Hashtable.h"
-
-1591779160 c:\users\user\documents\github\tree-avltree-hashtable-implementation\src\avltree.h
-	<iostream>
+	"utils.h"
 	<string>
-	"BTree.h"
-
-1591784372 source:c:\users\user\documents\github\tree-avltree-hashtable-implementation\src\avltree.cpp
-	"AVLTree.h"
-	<cmath>
 

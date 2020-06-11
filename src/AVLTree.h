@@ -1,9 +1,8 @@
 #ifndef AVLTREE_H
 #define AVLTREE_H
+
 #include <iostream>
-
 #include <string>
-
 #include "BTree.h"
 
 using namespace std;
@@ -14,7 +13,7 @@ class AVLTree : public BTree
         AVLTree() {}
         virtual ~AVLTree() {}
 
-        void test();
+        void test(Node* node);
 
         Node* addWord(string word);
 

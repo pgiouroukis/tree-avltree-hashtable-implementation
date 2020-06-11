@@ -2,26 +2,25 @@
 #include <string>
 #include <iostream>
 
-BTree::BTree()
-{
+using namespace std;
+
+BTree::BTree() {
     //ctor
     root = nullptr;
 }
 
-BTree::~BTree()
-{
+BTree::~BTree() {
     //dtor
 }
 
-Node* newNode(string w, Node* parent)
-{
+Node* newNode(string w, Node* parent){
     Node *node = new Node;
     node->word = w;
     node->occurences = 1;
     node->leftNode = nullptr;
     node->rightNode = nullptr;
     node->parentNode = parent;
-    node->height = ( parent!=nullptr ? parent->height + 1 : 0 );
+    node->height = 1;
     return node;
 
 }
@@ -50,6 +49,7 @@ Node* BTree::addWord(string w) {
                 } else {
                     flag = false;
                     ptr->leftNode = newNode(w, ptr);
+                    updateHeights(ptr->leftNode);
                     return ptr->leftNode;
                 }
             } else {
@@ -59,6 +59,7 @@ Node* BTree::addWord(string w) {
                 } else {
                     flag = false;
                     ptr->rightNode = newNode(w, ptr);
+                    updateHeights(ptr->rightNode);
                     return ptr->rightNode;
                 }
             }
@@ -75,7 +76,7 @@ Node* BTree::findWord(string w) {
 
     while ( !found && ptr!=nullptr ) {
         if (w.compare(ptr->word) == 0) {
-            std::cout<<"occurences: "<< ptr->occurences << endl;
+            std::cout<<"occurences: " << ptr->occurences <<endl;
             found = true;
             return ptr;
         } else if (w.compare(ptr->word) < 0) {
@@ -222,7 +223,7 @@ void inOrder(Node *n) {
 
     inOrder(n->leftNode);
 
-    cout << "Word: " << n->word << " | Occurences: " << n->occurences << " | Height: " << n->height << endl;
+    cout << "Word: " << n->word << " | Occurences: " << n->occurences << endl;
 
     inOrder(n->rightNode);
 
@@ -296,3 +297,15 @@ void BTree::printPreOrder() {
 
 
 /* -------------------------------------------------------------------------------- */
+
+bool updateHeights(Node* node) {
+    //cout << "HAHA";
+    while (node->parentNode!=nullptr) {
+        if (node->parentNode->height < node->height + 1) {
+            node->parentNode->height = node->height + 1;
+            //cout << "Updating height of word '" << node->parentNode->word << "' to " << node->height+1 << endl;
+        }
+        node = node->parentNode;
+    }
+    return true;
+}

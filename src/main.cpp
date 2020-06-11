@@ -3,8 +3,8 @@
 #include <fstream>
 #include <chrono>
 
-#include "AVLTree.h"
 #include "BTree.h"
+#include "AVLTree.h"
 #include "Hashtable.h"
 
 using namespace std;
@@ -15,9 +15,6 @@ int main()
     BTree tree;
     AVLTree atree;
 
-    string *Q;
-    Q = new string[5];
-
     int sum = 0;
 
     ifstream file("small-file.txt");
@@ -26,8 +23,9 @@ int main()
 
     int line = 1;
 
+
     while ( getline(file, linestr) ) {
-        //if ( line%1000==0) cout<<line<<endl;
+        if ( line%1000==0) cout<<line<<endl;
         line++;
         linestr.append(".");
 
@@ -43,9 +41,8 @@ int main()
             } else {
                 if (word!="") {
                     //cout<<word<<endl;
-                    //tree.addWord(word);
-                    //atree.addWord(word);
                     tree.addWord(word);
+                    atree.addWord(word);
                     a.addWord(word);
                    // cout<<sum<<endl;
 
@@ -57,23 +54,27 @@ int main()
             }
         }
     }
-    /*
-    atree.addWord("the");           atree.printInOrder();
-    atree.addWord("project");       atree.printInOrder();
-    atree.addWord("gutenberg");     atree.printInOrder();
-    atree.addWord("eBook");         atree.printInOrder();
-    atree.addWord("of");            atree.printInOrder();
-    atree.addWord("the");           atree.printInOrder();
-    atree.addWord("kostas");        atree.printInOrder();
 
-
+/*
+    atree.addWord("the");           //atree.printInOrder();
+    atree.addWord("project");       //atree.printInOrder();
+    atree.addWord("gutenberg");     //atree.printInOrder();
+    atree.addWord("eBook");         //atree.printInOrder();
+    atree.addWord("of");            //atree.printInOrder();
+    atree.addWord("the");           //atree.printInOrder();
+    atree.addWord("kostas");        //atree.printInOrder();
+    */
     //atree.test(atree.getRoot());
 
-    //atree.printPostOrder();
-    */
+    //atree.printPostOrder();*/
 
-    tree.findWord("him");
-    a.findWord("him");
+
+    //cout<<sum<<endl;
+
+    atree.findWord("The");
+    tree.findWord("The");
+    a.findWord("The");
+
 
     return 0;
 }

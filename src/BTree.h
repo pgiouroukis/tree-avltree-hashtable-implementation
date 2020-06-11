@@ -2,6 +2,7 @@
 #define BTREE_H
 
 #include <string>
+
 using namespace std;
 
 struct Node {
@@ -13,8 +14,7 @@ struct Node {
     int height;
 };
 
-class BTree
-{
+class BTree {
     public:
         BTree();
         virtual ~BTree();
@@ -36,5 +36,7 @@ class BTree
     private:
 
 };
+
+bool updateHeights(Node*);
 
 #endif // BTREE_H
