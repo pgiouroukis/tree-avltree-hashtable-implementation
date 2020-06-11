@@ -11,16 +11,15 @@ using namespace std;
 
 int main()
 {
-    Hashtable a(500000);
-    BTree tree;
-    AVLTree atree;
+    Hashtable a(500000);    //declaration of a Hash Table
+    BTree tree;             //declaration of a Binary Search Tree
+    AVLTree atree;          //declaration of an AVL Binary Search Tree
+
+    ifstream file("small-file.txt");   //the file where the text is stored
 
     int sum = 0;
-
-    ifstream file("small-file.txt");
     std::string linestr;
     string word;
-
     int line = 1;
 
 
@@ -40,13 +39,11 @@ int main()
                 }
             } else {
                 if (word!="") {
-                    //cout<<word<<endl;
+
                     tree.addWord(word);
                     atree.addWord(word);
                     a.addWord(word);
-                   // cout<<sum<<endl;
 
-                    //a.place(word);
                     sum++;
 
                 } else continue;
@@ -71,9 +68,9 @@ int main()
 
     //cout<<sum<<endl;
 
-    atree.findWord("The");
-    tree.findWord("The");
-    a.findWord("The");
+    atree.findWord("of");
+    tree.findWord("of");
+    a.findWord("of");
 
 
     return 0;

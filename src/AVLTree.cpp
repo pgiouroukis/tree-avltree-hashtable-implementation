@@ -1,6 +1,7 @@
 #include "AVLTree.h"
 #include <cmath>
 
+//just a utility function for printing the node. Helpful for debugging
 void printNode(Node* node) {
     cout << "Word: " << node->word << " ||| Parent Word: " << (node->parentNode!= nullptr ? node->parentNode->word : "nullptr")
          << " ||| left Word: " << (node->leftNode!=nullptr ? node->leftNode->word : "nullptr")
@@ -9,11 +10,15 @@ void printNode(Node* node) {
     return;
 }
 
+//nodeHeight uses the node's 'height' field, which is way faster than calculating the height recursively.
+//Don't use this right after rotating the tree, use recursiveHeight instead.
 int nodeHeight(Node* node) {
     if (node==nullptr) return 0;
     else return node->height;
 }
 
+//Calculate the height of the tree recursively.
+//Note, it is way slower than accessing the node's 'height' field, so avoid if possible.
 int recursiveHeight(Node* node) {
     int LHeight;
     int RHeight;
@@ -25,11 +30,13 @@ int recursiveHeight(Node* node) {
         return 0;
 }
 
+//the good ol' right rotate
 Node* rightRotate(Node* node) {
-    //kratame sto temp to node->leftNode giati tha to allaksoyme kai tha xasoume
+
+    //keep this node in a temp variable so it's value is stored after the following updates
     Node* temp = node->leftNode;
 
-    //allazoume ta parent nodes
+    //the parent nodes are changed
     if (temp->rightNode!=nullptr) temp->rightNode->parentNode = node;
     if (node->parentNode!=nullptr){
         if (node->parentNode->rightNode == node) node->parentNode->rightNode = temp;
@@ -38,19 +45,21 @@ Node* rightRotate(Node* node) {
     temp->parentNode = node->parentNode;
     node->parentNode = temp;
 
-    //kanoyme to rotation
+    //rotate the nodes
     node->leftNode = node->leftNode->rightNode;
     temp->rightNode = node;
 
-    return temp;
+    //the initial node is returned
+    return node;
 }
 
+//a classic left rotate
 Node* leftRotate(Node* node) {
 
-    //kratame sto temp to node->leftNode giati tha to allaksoyme kai tha xasoume
+    //keep this node in a temp variable so it's value is stored after the following updates
     Node* temp = node->rightNode;
 
-    //allazoume ta parent nodes
+    //the parent nodes are changed
     if (temp->leftNode!=nullptr)temp->leftNode->parentNode = node;
     if (node->parentNode!=nullptr) {
         if ( node->parentNode->rightNode == node ) node->parentNode->rightNode = temp;
@@ -59,13 +68,16 @@ Node* leftRotate(Node* node) {
     temp->parentNode = node->parentNode;
     node->parentNode = temp;
 
-    //kanoyme to rotation
+    //rotate the nodes
     node->rightNode = node->rightNode->leftNode; //eixame ena thema edo EDO! eixame temp = node->rightNode->leftNode
     temp->leftNode = node;
 
+    //the initial node is returned
     return temp;
 }
 
+//determine whether the tree needs left rotate, right rotate, left-right rotate or right-left rotate,
+//and then call the proper rotates accordingly
 void balance(Node* node, int LHeight, int RHeight) {
     int childLeftHeight;
     int childRightHeight;
@@ -105,57 +117,58 @@ void balance(Node* node, int LHeight, int RHeight) {
     return;
 }
 
+//if the root of a tree needs to be balanced, then we need to change the root node.
 void changeRoot(AVLTree *tree, int lheight, int rheight) {
+
+    //determine the rotation that is about to happen
+    if (lheight> rheight)
+        if ( nodeHeight(tree->root->leftNode->rightNode) > nodeHeight(tree->root->leftNode->leftNode) ) //left-right rotation
+            tree->root = tree->root->leftNode->rightNode;
+        else tree->root = tree->root->leftNode; //right rotation
+    else
+        if (nodeHeight(tree->root->rightNode->leftNode) > nodeHeight(tree->root->rightNode->rightNode))//right-left rotation
+            tree->root = tree->root->rightNode->leftNode;
+        else tree->root = tree->root->rightNode; //left rotation
     return;
 }
 
+//override the addWord method, so the balance of the nodes can be checked
 Node* AVLTree::addWord(string word){
 
     int LHeight;
     int RHeight;
 
-    //we call the parent's add word method, then we balance the tree
-    Node* node = BTree::addWord(word);
+    //call the parent's add word method to add the word, then balance the tree
+    Node* addedNode = BTree::addWord(word);
 
-    //we check if the tree needs balancing
+    //Create a 'node' variable, so we can 'climb' the tree to check if it needs balancing, without losing the recently added node
+    Node* node = addedNode;
+
+    //check if the tree needs balancing, by parsing it from the node added all the way to the root
     while (node != nullptr) {
         LHeight = nodeHeight(node->leftNode);
         RHeight = nodeHeight(node->rightNode);
         if ( abs(LHeight-RHeight) > 1 ) {
 
-            if (node == root) {
-                //an to node poy exei thema einai to root, logo ton rotations, prepe na allaksoume tin rize tou dentroy
-                //changeRoot(this, LHeight, RHeight)
-                if (LHeight > RHeight) {
-                    if ( nodeHeight(node->leftNode->rightNode) > nodeHeight(node->leftNode->leftNode) ) { //edo einai periptosi left-right rotation
-                        this->root = node->leftNode->rightNode;
-                    } else { //edo eina periptosi right rotation
-                        this->root = node->leftNode;
-                    }
+            //If the root node needs balancing, then, because of the rotations, we need to change the root of the tree.
+            if (node == root) changeRoot(this, LHeight, RHeight);
 
-                }
-                else {
-                    if (nodeHeight(node->rightNode->leftNode) > nodeHeight(node->rightNode->rightNode)) { //edo einai periptosi right-left rotation
-                        this->root = node->rightNode->leftNode;
-                    } else { //edo einai periptosi left rotation
-                        this->root = node->rightNode;
-                    }
-                }
-            }
-            //cout<<"Starting to balance <<" << node->word << ">> LHEIGHT = " << LHeight << " RHEIGHT = " << RHeight <<endl;
+            //Balance the tree
             balance(node, LHeight, RHeight);
+
+            //Update the height of the node that needed balance
             node->height = recursiveHeight(node);
+
+            //Update the heights all the way to the top, if needed
             updateHeights(node);
-            //cout<<"Ending the balance <<"<< node->word << ">>" << endl << endl;
 
         }
-        //printNode(node);
+
+        // 'Climb' one node up
         node = node->parentNode;
     }
-    //cout << "--------------" << endl;
-    return node;
+
+    //Return the initialNode
+    return addedNode;
 }
 
-void AVLTree::test(Node* node) {
-    cout << recursiveHeight(node) << endl;
-}

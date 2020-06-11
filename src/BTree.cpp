@@ -301,10 +301,8 @@ void BTree::printPreOrder() {
 bool updateHeights(Node* node) {
     //cout << "HAHA";
     while (node->parentNode!=nullptr) {
-        if (node->parentNode->height < node->height + 1) {
+        if (node->parentNode->height < node->height + 1)
             node->parentNode->height = node->height + 1;
-            //cout << "Updating height of word '" << node->parentNode->word << "' to " << node->height+1 << endl;
-        }
         node = node->parentNode;
     }
     return true;

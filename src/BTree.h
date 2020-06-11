@@ -21,7 +21,7 @@ class BTree {
 
         Node* getRoot() {return root;}
 
-        virtual Node* addWord(string w);
+        virtual Node* addWord(string w); //let the addWord method to be overridden
         Node* findWord(string w);
         bool deleteWord(string w);
 
