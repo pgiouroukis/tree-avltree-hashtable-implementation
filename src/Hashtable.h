@@ -12,7 +12,7 @@ class Hashtable
         void setA(int);
         void setB(int);
         bool addWord(string);
-        bool findWord(string);
+        int findWord(string);
 
     private:
         string* A;
