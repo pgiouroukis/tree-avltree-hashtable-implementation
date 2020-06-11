@@ -43,6 +43,7 @@ bool Hashtable::addWord(string A_word)
 {
     int startPos,i;
     startPos = HashFunction(A_word,Size); //
+    i=startPos;
 
     if (A[startPos]=="-")   //If the starting position is empty then the word is placed in that position
     {                       //And +1 is added to the frequency array
@@ -54,9 +55,9 @@ bool Hashtable::addWord(string A_word)
 
     else
     {
-        i=startPos;               //The last case checked is if another word than the one given has the same hash value therfore being set
-        while (A[i]!="-")         //in the same posistion. In this case the program starts searching all the positions after it until it finds
-        {                         //an empty spot("-"), where it sets it.
+                                                //The last case checked is if another word than the one given has the same hash value therfore being set
+        while (A[i]!="-" && A[i]!=A_word)       //in the same posistion. In this case the program starts searching all the positions after it until it finds
+        {                                       //an empty spot("-"), where it sets it.
             i++;
             if (i>Size-1)
                 i=0;
@@ -75,47 +76,38 @@ bool Hashtable::findWord(string A_word)
         startPos=HashFunction(A_word,Size);
         i=startPos;
 
+        if (A[startPos]=="-")      //If the hash position of the word is empty then then there is no way the word is in this array, thus the search
+            {                     // is unsuccesful
+                cout<<"Word " << A_word << " not found!"<<endl;
+                return false;
+            }
+
         while(!found) //found is a guard variable which signals the stop of the while loop if the word is found inside the array
         {
 
-            if (A[startPos]=="-") //If the hash position of the word is empty then then there is no way the word is in this array, thus the search
-            {                     // is unsuccesful
-                cout<<"Word not found!"<<endl;
-                return false;
-            }
-            else if (A[startPos]==A_word) //If the word is in its hash posistion then we print the appropriate message
+            if (A[i]==A_word) //If the word is in its hash posistion then we print the appropriate message
             {
                 cout<<"The word "<<A_word<<" was found in position "<<i<<", "<<B[i]<<" times."<<endl;
                 return true;
             }
-
-                   //if this word is not found in that position then the program starts searching in the rest of the array to find it
-            i++;
-
-            if (i>Size-1) //if it reaches the end then it goes on from the start of the array
-                i=0;
-
-            if (i==startPos) //Finally if the program does a full circle and still did not find the word, then the search was unsuccesfull
+            else
             {
-                cout<<"Word not found!"<<endl;
-                return false;
+                i++;   //if this word is not found in that position then the program starts searching in the rest of the array to find it
+
+                if (i>Size-1) //if it reaches the end then it goes on from the start of the array
+                    i=0;
+
+                if (i==startPos) //Finally if the program does a full circle and still did not find the word, then the search was unsuccesfull
+                {
+                    cout<<"Word " << A_word << " not found!"<<endl;
+                    return false;
+                }
             }
         }
 
     return true;
 
 }
-
-/*int HashFunction(string a,int Size) //This function recieves a string and the size of the array B and returns an integer
-{                                   //that shows where the word should be placed on the word array.
-    unsigned int sum=0,i;
-
-    for (i=0;i<a.length();i++) //On the word given every letter's integer value is added to a sum
-    {
-        sum+=int(a[i]);
-    }
-    return sum%Size; //The place where the word belongs is the sum of it's letter's values modulo the size of the array
-}*/
 
 int HashFunction(string a,int Size) //This function recieves a string and the size of the array B and returns an integer
 {                                   //that shows where the word should be placed on the word array.

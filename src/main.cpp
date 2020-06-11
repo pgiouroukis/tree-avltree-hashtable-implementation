@@ -2,78 +2,85 @@
 #include <string>
 #include <fstream>
 #include <chrono>
-
-#include "BTree.h"
 #include "AVLTree.h"
+#include "BTree.h"
 #include "Hashtable.h"
 
 using namespace std;
 
+bool addToQ(int sum, int WordsInQ)
+{
+
+    if (!(sum%25) && WordsInQ<10000)
+    {
+        return true;
+    }
+    return false;
+}
+
+
 int main()
 {
-    Hashtable a(500000);    //declaration of a Hash Table
-    BTree tree;             //declaration of a Binary Search Tree
-    AVLTree atree;          //declaration of an AVL Binary Search Tree
+    Hashtable a(500000);
+    BTree tree;
+    AVLTree atree;
 
-    ifstream file("small-file.txt");   //the file where the text is stored
+    string *Q;
+    Q = new string[10000];
+    int WordsInQ=0;
 
     int sum = 0;
-    std::string linestr;
+    unsigned int i;
+
+    ifstream file("small-file.txt");
+    string linestr;
     string word;
+
     int line = 1;
 
-
-    while ( getline(file, linestr) ) {
-        if ( line%1000==0) cout<<line<<endl;
+    while ( getline(file, linestr) )
+    {
         line++;
         linestr.append(".");
 
         word = "";
-        for (int i = 0 ; i < linestr.length() ; i++) {
-            if ( isalpha(linestr[i]) ) {
-                word.append( string(1,linestr[i]) );
-                if( i==linestr.length()-1) {
-                    //cout<< word << endl;
-                    word="";
-                    sum++;
-                }
-            } else {
-                if (word!="") {
 
+        for (i=0; i<linestr.length(); i++)
+        {
+            if (isalpha(linestr[i]))
+            {
+                word.append(string(1,linestr[i]));
+            }
+            else
+            {
+                if (word!="")
+                {
                     tree.addWord(word);
-                    atree.addWord(word);
-                    a.addWord(word);
+                    //atree.addWord(word);
+                     a.addWord(word);
 
                     sum++;
 
-                } else continue;
+                    if (addToQ(sum,WordsInQ))
+                    {
+                        WordsInQ++;
+                        Q[WordsInQ-1]=word;
+                    }
+                }
+                else continue;
                 word = "";
             }
         }
     }
 
-/*
-    atree.addWord("the");           //atree.printInOrder();
-    atree.addWord("project");       //atree.printInOrder();
-    atree.addWord("gutenberg");     //atree.printInOrder();
-    atree.addWord("eBook");         //atree.printInOrder();
-    atree.addWord("of");            //atree.printInOrder();
-    atree.addWord("the");           //atree.printInOrder();
-    atree.addWord("kostas");        //atree.printInOrder();
-    */
-    //atree.test(atree.getRoot());
 
-    //atree.printPostOrder();*/
-
-
-    //cout<<sum<<endl;
-
-    atree.findWord("of");
-    tree.findWord("of");
-    a.findWord("of");
-
+    for (i=0;i<10000;i++)
+    {
+        a.findWord(Q[i]);
+        tree.findWord(Q[i]);
+        //atree.findWord("treachery");
+    }
 
     return 0;
 }
 
-//paok ellada dania cyprus denia bagladesh finland fagito fzlol zebra zabra .
