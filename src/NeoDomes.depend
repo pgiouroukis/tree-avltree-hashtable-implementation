@@ -1,83 +1,45 @@
 # depslib dependency file v1.0
-1591638730 source:/home/phillipos/Desktop/C++ projects/NeoDomes/BTree.cpp
+1591872688 source:/home/phillipos/Documents/GitHub/tree-avltree-hashtable-implementation/src/AVLTree.cpp
+	"AVLTree.h"
+	<cmath>
+
+1591872688 /home/phillipos/Documents/GitHub/tree-avltree-hashtable-implementation/src/AVLTree.h
+	<iostream>
+	<string>
+	"BTree.h"
+
+1591872688 /home/phillipos/Documents/GitHub/tree-avltree-hashtable-implementation/src/BTree.h
+	<string>
+
+1591876517 source:/home/phillipos/Documents/GitHub/tree-avltree-hashtable-implementation/src/BTree.cpp
 	"BTree.h"
 	<string>
 	<iostream>
 
-1591638695 /home/phillipos/Desktop/C++ projects/NeoDomes/BTree.h
-	<string>
-
-1591638823 source:/home/phillipos/Desktop/C++ projects/NeoDomes/Hashtable.cpp
+1591877134 source:/home/phillipos/Documents/GitHub/tree-avltree-hashtable-implementation/src/Hashtable.cpp
 	"Hashtable.h"
 	<string>
 	<iostream>
 
-1591269365 /home/phillipos/Desktop/C++ projects/NeoDomes/Hashtable.h
+1591877134 /home/phillipos/Documents/GitHub/tree-avltree-hashtable-implementation/src/Hashtable.h
 	<string>
 
-1591638695 source:/home/phillipos/Desktop/C++ projects/NeoDomes/main.cpp
+1591879451 source:/home/phillipos/Documents/GitHub/tree-avltree-hashtable-implementation/src/main.cpp
 	<iostream>
 	<string>
 	<fstream>
 	<chrono>
+	<iostream>
 	"AVLTree.h"
 	"BTree.h"
 	"Hashtable.h"
+	"TextTable.h"
 
-1590925619 /home/phillipos/Desktop/C++ projects/NeoDomes/AVLTree.h
+1591879385 /home/phillipos/Documents/GitHub/tree-avltree-hashtable-implementation/src/TextTable.h
 	<iostream>
+	<map>
+	<iomanip>
+	<vector>
 	<string>
-	"BTree.h"
-
-1590932597 source:/home/phillipos/Desktop/C++ projects/NeoDomes/AVLTree.cpp
-	"AVLTree.h"
-	<cmath>
-
-1591864051 source:c:\users\user\desktop\ergasiadomes\neodomes\btree.cpp
-	"BTree.h"
-	<string>
-	<iostream>
-
-1591865355 c:\users\user\desktop\ergasiadomes\neodomes\btree.h
-	<string>
-
-1591602822 source:c:\users\user\desktop\ergasiadomes\neodomes\hashtable.cpp
-	"Hashtable.h"
-	<string>
-	<iostream>
-
-1591233364 c:\users\user\desktop\ergasiadomes\neodomes\hashtable.h
-	<string>
-
-1591863972 source:c:\users\user\desktop\ergasiadomes\neodomes\main.cpp
-	<iostream>
-	<string>
-	<fstream>
-	<chrono>
-	"BTree.h"
-	"AVLTree.h"
-	"Hashtable.h"
-
-1591865187 c:\users\user\desktop\ergasiadomes\neodomes\avltree.h
-	<iostream>
-	<string>
-	"BTree.h"
-
-1591865180 source:c:\users\user\desktop\ergasiadomes\neodomes\avltree.cpp
-	"AVLTree.h"
-	<cmath>
-
-1591776036 c:\users\user\desktop\ergasiadomes\neodomes\testclass.h
-	<iostream>
-	<cstdio>
-	<sstream>
-	<algorithm>
-
-1591858264 c:\users\user\desktop\ergasiadomes\neodomes\utils.h
-
-1591858258 source:c:\users\user\desktop\ergasiadomes\neodomes\utils.cpp
-	<iostream>
-	<string>
-	"utils.h"
-	<string>
+	<clocale>
 

@@ -14,7 +14,7 @@
 using namespace std;
 
 bool addToQ(int sum, int WordsInQ) {
-    if (!(sum % 23) && WordsInQ < QSIZE)
+    if (!(sum % 22) && WordsInQ < QSIZE)
         return true;
     return false;
 }
@@ -32,7 +32,7 @@ int main() {
     unsigned int i;
 
     ifstream file("small-file.txt");
-    
+
     string linestr;
     string word;
     int line = 1;
@@ -78,7 +78,7 @@ int main() {
     Node *node1,*node2;
     TextTable t('-', '|', '+');
     t.add("Word");t.add("Hashtable occs");t.add("AVL occs");t.add("BTRee occs");t.endOfRow();
-    for (i = 0; i < QSIZE; i+=100) {
+    for (i = 0; i < QSIZE; i+=10) {
 
         t.add(" Word: " + Q[i]);
 
@@ -118,4 +118,3 @@ int main() {
 
     return 0;
 }
-
