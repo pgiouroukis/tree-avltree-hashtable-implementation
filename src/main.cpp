@@ -16,9 +16,10 @@ using namespace std;
 bool addToQ(int sum, int WordsInQ);
 void printSomeOccurences(int step, string*, Hashtable*, AVLTree*, BTree*);
 void printTimeComparison(string *, Hashtable *, AVLTree *, BTree *);
+int CountWords(string);
 
 int main() {
-    Hashtable hashtable(500000);
+
     BTree bTree;
     AVLTree avlTree;
 
@@ -28,6 +29,12 @@ int main() {
     int sum = 0;
     unsigned int i;
 
+    sum=CountWords("small-file.txt");
+    Hashtable hashtable(sum);
+    cout<<sum<<endl;
+
+
+
     ifstream file("small-file.txt");
 
     string linestr;
@@ -35,12 +42,13 @@ int main() {
     int line = 0;
     int loaderCount=0;
 
+    //sum=0;
     while ( getline(file, linestr) ) {
         if (line % 10000 == 0) {
             loaderCount++;
             cout << '\r' << flush;
             cout << "Reading the words... |" ;
-            for (int i=0;i<6;i++) if (i<loaderCount) cout << "+++++"; else cout << "     ";
+            for (int i=0;i<6;i++) if (i<loaderCount) cout << "+++++++++"; else cout << "     ";
             cout << "|  ";
         }
         line++;
@@ -69,7 +77,7 @@ int main() {
         }
     }
 
-    printSomeOccurences(100, Q, &hashtable, &avlTree, &bTree);
+    printSomeOccurences(1, Q, &hashtable, &avlTree, &bTree);
 
     cout << "------------------------------------" << endl;
 
@@ -110,6 +118,7 @@ void printTimeComparison(string *Q, Hashtable *a, AVLTree *atree, BTree *tree) {
 
 void printSomeOccurences(int step, string *Q, Hashtable *a, AVLTree *atree, BTree *tree) {
     int num;
+    int i;
     Node *node1, *node2;
     TextTable t('-', '|', '+');
     t.add("Word");
@@ -117,8 +126,9 @@ void printSomeOccurences(int step, string *Q, Hashtable *a, AVLTree *atree, BTre
     t.add("AVL occs");
     t.add("BTRee occs");
     t.endOfRow();
-    for (int i = 0; i < QSIZE; i += step)
+    for (i = 0; i < QSIZE; i += step)
     {
+
 
         t.add(" Word: " + Q[i]);
 
@@ -137,7 +147,37 @@ void printSomeOccurences(int step, string *Q, Hashtable *a, AVLTree *atree, BTre
 }
 
 bool addToQ(int sum, int WordsInQ) {
-    if (!(sum % 22) && WordsInQ < QSIZE)
+    if (!(sum % 2) && WordsInQ < QSIZE)
         return true;
     return false;
+}
+
+int CountWords(string FileName){
+
+    ifstream file(FileName);
+
+    string linestr;
+    string word;
+    int sum;
+    unsigned int i;
+
+
+    while ( getline(file, linestr) ) {
+        linestr.append(".");
+        word = "";
+
+        for (i=0; i<linestr.length(); i++) {
+            if (isalpha(linestr[i]))
+                word.append(string(1,linestr[i]));
+            else {
+                if (word!="") {
+                    sum++;
+                }
+                else continue;
+                word = "";
+            }
+        }
+    }
+    file.close();
+    return sum;
 }
