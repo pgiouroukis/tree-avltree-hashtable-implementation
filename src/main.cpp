@@ -41,7 +41,7 @@ int main() {
     int line = 0;
     int loaderCount=0;
 
-    sum = 0;
+    int pos = 0;
 
     //start inserting words to the data structures
     while ( getline(file, linestr) ) {
@@ -66,9 +66,9 @@ int main() {
                     avlTree.addWord(word);      //add the word to the avlTree
                     hashtable.addWord(word);    //add the word to the hash table
 
-                    sum++;
+                    pos++;
 
-                    if (addToQ(sum,WordsInQ)) { //determine if the word should be added to Q
+                    if (addToQ(pos,WordsInQ)) { //determine if the word should be added to Q
                         Q[WordsInQ]=word;
                         WordsInQ++;
                     }
@@ -95,13 +95,6 @@ void printTimeComparison(string *Q, Hashtable *a, AVLTree *atree, BTree *tree) {
     std::chrono::steady_clock::time_point begin;
     std::chrono::steady_clock::time_point end;
 
-    //measure the time for the Binary Search Tree
-    begin = std::chrono::steady_clock::now();
-    for (int i = 0; i < QSIZE; i++)
-        tree->findWord(Q[i]);
-    end = std::chrono::steady_clock::now();
-    cout << "Time In Binary Search Tree : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
-
     //measure the time for the Hashtable
     begin = std::chrono::steady_clock::now();
     for (int i = 0; i < QSIZE; i++)
@@ -115,6 +108,13 @@ void printTimeComparison(string *Q, Hashtable *a, AVLTree *atree, BTree *tree) {
         atree->findWord(Q[i]);
     end = std::chrono::steady_clock::now();
     cout << "Time In AVL Tree : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
+
+    //measure the time for the Binary Search Tree
+    begin = std::chrono::steady_clock::now();
+    for (int i = 0; i < QSIZE; i++)
+        tree->findWord(Q[i]);
+    end = std::chrono::steady_clock::now();
+    cout << "Time In Binary Search Tree : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
 
 
 }
@@ -147,8 +147,8 @@ void printSomeOccurences(int step, string *Q, Hashtable *a, AVLTree *atree, BTre
     return;
 }
 
-bool addToQ(int sum, int WordsInQ) {
-    if (!(sum % 2) && WordsInQ < QSIZE)
+bool addToQ(int pos, int WordsInQ) {
+    if (!(pos % 2) && WordsInQ < QSIZE)
         return true;
     return false;
 }
