@@ -10,10 +10,13 @@ using namespace std;
 class AVLTree : public BTree
 {
     public:
-        AVLTree() {}
-        virtual ~AVLTree() {}
+        AVLTree() {} // the default constructor from BTree is called
+        virtual ~AVLTree() {} //the default destructor from BTree is called
 
+        //the overriden methods from BTree
         Node* addWord(string word);
+        bool deleteWord(string word);
+
 
     protected:
 

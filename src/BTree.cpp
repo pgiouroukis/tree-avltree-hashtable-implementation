@@ -4,7 +4,7 @@
 
 using namespace std;
 
-BTree::BTree() {
+BTree::BTree() { //initialize the tree
     //ctor
     root = nullptr;
 }
@@ -13,7 +13,7 @@ BTree::~BTree() {
     //dtor
 }
 
-Node* newNode(string w, Node* parent){
+Node* newNode(string w, Node* parent){ //initialize a node by setting the proper attributes
     Node *node = new Node;
     node->word = w;
     node->occurences = 1;
@@ -27,188 +27,178 @@ Node* newNode(string w, Node* parent){
 
 Node* BTree::addWord(string w) {
 
+    //if the tree is empty, we need to update it's root.
     if (root == nullptr) {
         Node *node = newNode(w, nullptr);
         root = node;
         return node;
     } else {
+        //if the tree is not empty, we need to find the proper position to put the new node.
 
-        Node *ptr = root;
-        bool flag = true;
+        Node *ptr = root; // begin the traverse from the root of the node
 
-        while( flag ) {
+        while( true ) {
 
-            if( w.compare(ptr->word) == 0) {
-                //cout<<w<<"="<<ptr->word<<endl;
-                ptr->occurences++;
-                return ptr;
-            } else if (w.compare(ptr->word) < 0) {
-                //cout<<w<<"<"<<ptr->word<<endl;
-                if (ptr->leftNode != nullptr) {
-                    ptr = ptr->leftNode;
-                } else {
-                    flag = false;
-                    ptr->leftNode = newNode(w, ptr);
-                    updateHeights(ptr->leftNode);
-                    return ptr->leftNode;
+            if( w.compare(ptr->word) == 0) {        //if the word we are trying to add is already in the tree...
+
+                ptr->occurences++;                  //...we just increase the number of occurrences...
+                return ptr;                         //...and we return the pointer to the existing node
+
+            } else if (w.compare(ptr->word) < 0) {  //if the word we are trying to add is "smaller" than the current word we are at...
+
+                if (ptr->leftNode != nullptr)       //...if the node has left child
+                    ptr = ptr->leftNode;            //...continue traversing the tree, going left
+                else {
+                    ptr->leftNode = newNode(w, ptr);//...or if the node does not have a left node, add the new word to the left of the node...
+                    updateHeights(ptr->leftNode);   //...and update the heights all the way to the root
+                    return ptr->leftNode;           //...return the pointer to the newly created node
                 }
-            } else {
-                //cout<<w<<">"<<ptr->word<<endl;
-                if (ptr->rightNode != nullptr) {
-                    ptr = ptr->rightNode;
-                } else {
-                    flag = false;
-                    ptr->rightNode = newNode(w, ptr);
-                    updateHeights(ptr->rightNode);
-                    return ptr->rightNode;
+            } else {                                //if the word we are trying to add is "bigger" than the current word we are at...
+
+                if (ptr->rightNode != nullptr)      //...if the node has right child
+                    ptr = ptr->rightNode;           //...continue traversing the tree, going right
+                else {
+                    ptr->rightNode=newNode(w, ptr); //...or if the node does not have a right node, add the new word to the right of the node...
+                    updateHeights(ptr->rightNode);  //...and update the heights all the way to the root
+                    return ptr->rightNode;          //...return the pointer to the newly created node
                 }
             }
         }
 
     }
-    return nullptr;
+    return nullptr; // return nullptr if something goes wrong
 }
 
 Node* BTree::findWord(string w) {
 
-    Node *ptr = root;
-    bool found = false;
+    Node *ptr = root; // start traversing the tree from the root
 
-    while ( !found && ptr!=nullptr ) {
-        if (w.compare(ptr->word) == 0) {
-            //std::cout<<"occurences: " << ptr->occurences <<endl;
-            found = true;
-            return ptr;
-        } else if (w.compare(ptr->word) < 0) {
-            ptr = ptr->leftNode;
-        } else {
-            ptr = ptr->rightNode;
-        }
+    //while ptr is not nullptr, we are still traversing the tree
+    while ( ptr!=nullptr ) {
+        if (w.compare(ptr->word) == 0)          //found the word...
+            return ptr;                         //..so return it
+        else if (w.compare(ptr->word) < 0)      //the word is "smaller"...
+            ptr = ptr->leftNode;                //...so go left
+        else                                    //the word is "bigger"...
+            ptr = ptr->rightNode;               //...so go right
     }
-    if (!found) {
-        return nullptr;
-    }
+
+    //if it reaches here, that means the word was not found, so nullptr is returned
     return nullptr;
 }
 
 bool BTree::deleteWord(string w) {
 
-    //arxika, vrisko to node poy einai pros diagrafi, kai to onomazo ptr
+    //first, try to find the word to be deleted
     Node *ptr = this->findWord(w);
 
-    //an den vrethei to node, diladi an to ptr einai null, epistrefo false, diladi den diagrafike to stoixeio
-    if (ptr == nullptr) {
+    //if the word is not in the tree, we return false
+    if (ptr == nullptr)
         return false;
-    } else {
+    else {
+
+        //in this case, the node to be deleted has no children, so it is a leaf
         if (ptr->leftNode == nullptr && ptr->rightNode == nullptr) {
-            //to ptr den exei kanena paidi, einai diladi leaf
+            //in this case we only have to update the parent of the node
+            //but first, we have to determine whether the parent node has the node as a left or as a right child
 
-            //sthn periptosi auti, prepei na enimeroso ton patera toy oste na deixnei se nullptr
-            //prota omos prepei na vro an o pateras toy ptr exei to ptr deksi h aristero paidi (oste na min enimeroso to lathos paidi).
-
-            //arxika, elegxo an exei patera (mporei na einai root node)
+            //first of all, we check if the node is the root node, so there is no parent node to update
             if (ptr->parentNode != nullptr) {
-                //efoson exei patera, vrisko an to ptr eina deksi i aristero paidi toy
-                if (ptr->parentNode->leftNode == ptr) {
-                    //to ptr einai aristero paidi
+                //since the node has a parent node, we must determine whether the parent node has the node as a left or as a right child
+                if (ptr->parentNode->leftNode == ptr)
+                    //our node is a left-child
                     ptr->parentNode->leftNode = nullptr;
-                } else {
-                    //to ptr einai deksi paidi
+                else
+                    //our node is a right-child
                     ptr->parentNode->rightNode = nullptr;
-                }
             } else {
-                //an den exei parent node, einai to root node, ara, afoy eprokeito na to diagrapso,
-                //prepei na valo to root node na deixnei se nullptr
+                //the node is the root of the tree,so we just update the root attribute to nullptr
                 root = nullptr;
             }
-            //apodesmeuo ton xoro toy node apo to heap
+
+            //free up the space of the node
             delete ptr;
 
-            //epistrefo true, afoy h diagrafh itan epitixis
+            //return true, since the deletion was successful
             return true;
 
         } else if (ptr->leftNode == nullptr || ptr->rightNode == nullptr) {
-            //to ptr exei 1 paidi, esto childPtr (den kseroume akoma an einai deksi h aristero)
+            //in this case, the node to be deleted has only one child
 
             Node *childPtr;
 
-            //vrisko arxika to paidi auto, diladi na einai deksi i aristero, kai to onomazo childPtr
+            //we find the child of the node, (is it a right or a left child?)
             if (ptr->leftNode != nullptr) {
-                childPtr = ptr->leftNode;
+                childPtr = ptr->leftNode; //the node has left-child
             } else {
-                childPtr = ptr->rightNode;
+                childPtr = ptr->rightNode;//the node has right-child
             }
 
-            //ama exei patera to ptr, prepei na enimeroso ton patera toy me to childPtr
+            //first of all, we check if the node is the root node, so there is no parent node to update
             if (ptr->parentNode != nullptr) {
-                //prepei na valo to childPtr deksia h aristera ston patera toy ptr, analoga me to poy einai o ptr se sxesi me ton patera toy
-
+                //since the node has a parent node, we must determine whether the parent node has the node as a left or as a right child
                 if (ptr->parentNode->leftNode == ptr) {
-                    //to ptr einai aristero paidi toy patera toy
+                    //our node is a left-child
                     ptr->parentNode->leftNode = childPtr;
                 } else {
-                    //to ptr einai deksi paidi toy patera toy
+                    //our node is a right-child
                     ptr->parentNode->rightNode = childPtr;
                 }
-                childPtr->parentNode = ptr->parentNode;
+                childPtr->parentNode = ptr->parentNode; //set the parent of childptr to be the parent of our node
             } else {
-                //ama o ptr den exei patera, tote einai to root node
-                //ara prepei na theso to childPtr os root
+                //if ptr has no parent node,then it is the root, so we have to update the root of the tree
                 root = childPtr;
                 childPtr->parentNode = nullptr;
             }
-            //apodesmeuo ton xoro toy ptr
+            //free up the space of the node
             delete ptr;
 
-            //epistrefo true, afoy h diagrafi itan epitixis
+            //return true, since the deletion was successful
             return true;
 
         } else {
-            //to ptr exei 2 paidia
+            //in this case, the node to be deleted 2 children
 
-            //arxika, thelo na vro to pio aristero leaf apo to deksi ipodentro
+            //in tptr, the inorder successor of ptr is stored
             Node *tptr = ptr->rightNode;
-            //me thn while authn, vrisko to pio aristeo leaf apo to deksi ipodentro, as to poyme tptr
-            while (tptr->leftNode != nullptr) {
+            //finding the inorder successor...
+            while (tptr->leftNode != nullptr)
                 tptr = tptr->leftNode;
-            }
 
-            //prosoxi!!! to stoixeio auto (tptr) den mporei na exei aristero paidi (giati telika tha kataligame ekei)
-            //omos mporei na exei deksi paidi. to deksi auto paidi toy prepei na to valoyme telika os aristero paidi toy gonea toy tptr.
-            //prepei omos prota na eleksoume oti to tptr den einai to deksi paidi toy ptr, allios to parapano den isxyei
-            if (ptr->rightNode != tptr) {
+            //NOTE: tptr can't have a left child, otherwise this left child would be tptr
+            //BUT tptr might have a right child. This right child must be updated so it points to the parent node of tptr
+            //and the parent node of tptr must be updated so it points to this child
+            if (ptr->rightNode != tptr) { // the latter does not apply in the special case that tptr is right child of ptr
                 if (tptr->rightNode!=nullptr) {
-                    tptr->parentNode->leftNode = tptr->rightNode;
-                } else {
-                    tptr->parentNode->leftNode = nullptr;
-                }
+                    tptr->parentNode->leftNode = tptr->rightNode;   //update the parent node of tptr, so it points to the right child of tptr
+                    tptr->rightNode->parentNode = ptr->parentNode;  //update the right child of tptr, so it points to the parent node of tptr
+                } else
+                    tptr->parentNode->leftNode = nullptr; // otherwise, set the parent node of tptr to have a nullptr as a left child
             }
 
-            //metafero to tptr sthn thesi toy ptr
+            //move tptr to the position of ptr, by making the proper changes
             tptr->leftNode = ptr->leftNode;
-            if (ptr->rightNode != tptr)     tptr->rightNode= ptr->rightNode;
+            if (ptr->rightNode != tptr)
+                tptr->rightNode= ptr->rightNode;
             tptr->parentNode = ptr->parentNode;
 
-            //enimerono ton patera toy ptr, afou pleon prepei na deixnei sto tptr. (efoson yparxei, mporei to ptr na einai riza)
+            //the parent of ptr must now point to tptr, if ptr is not the root
             if (ptr->parentNode != nullptr) {
-                //prota omos prepei na ksero an to ptr eina deksi i aristero paidi
-                if (ptr->parentNode->leftNode == ptr) {
-                    //an einai aristero paidi, allakse to kai vale aristero paidi to tptr
+                //but we need to know if ptr is right or left child of his parent node
+                if (ptr->parentNode->leftNode == ptr)
+                    //left-child
                     ptr->parentNode->leftNode = tptr;
-
-                } else {
-                    //antistoixa, an einai deksi paidi, allakse to kai vale deksi paidi to tptr
+                else
+                    //right-child
                     ptr->parentNode->rightNode = tptr;
-                }
             } else {
-                //ama to ptr den exei patera, simainei oti einai to root node
-                //ara prepei na thes to root os tptr
+                //if ptr is the root, now tptr must be the root
                 root = tptr;
             }
-            //diagrafo ton ptr apo to heap
+            //free up the space of ptr
             delete ptr;
 
-            //epistrefo true, afou itan epitixis h diagrafi
+            //return true, since the deletion was successful
             return true;
         }
     }
@@ -217,7 +207,7 @@ bool BTree::deleteWord(string w) {
 
 /* -------------------------------------------------------------------------------- */
 
-void inOrder(Node *n) {
+void inOrder(Node *n) { //recursive inOrder traversal, starting from node n
 
     if (n == nullptr) return;
 
@@ -231,7 +221,7 @@ void inOrder(Node *n) {
 
 }
 
-void BTree::printInOrder() {
+void BTree::printInOrder() { //start inOrder traversal from the root of the tree
 
     std::cout << "Starting inOrder Traversal..." << endl;
 
@@ -243,7 +233,7 @@ void BTree::printInOrder() {
 
 }
 
-void postOrder(Node *n) {
+void postOrder(Node *n) { //recursive postOrder traversal, starting from node n
 
     if (n == nullptr) return;
 
@@ -257,7 +247,7 @@ void postOrder(Node *n) {
 
 }
 
-void BTree::printPostOrder() {
+void BTree::printPostOrder() { //start postOrder traversal from the root of the tree
 
     std::cout << "Starting postOrder Traversal..." << endl;
 
@@ -269,7 +259,7 @@ void BTree::printPostOrder() {
 
 }
 
-void preOrder(Node *n) {
+void preOrder(Node *n) { //recursive preOrder traversal, starting from node n
 
     if (n == nullptr) return;
 
@@ -283,7 +273,7 @@ void preOrder(Node *n) {
 
 }
 
-void BTree::printPreOrder() {
+void BTree::printPreOrder() { //start preOrder traversal from the root of the tree
 
     std::cout << "Starting preOrder Traversal..." << endl;
 
@@ -295,15 +285,13 @@ void BTree::printPreOrder() {
 
 }
 
-
 /* -------------------------------------------------------------------------------- */
 
-bool updateHeights(Node* node) {
-    //cout << "HAHA";
-    while (node->parentNode!=nullptr) {
-        if (node->parentNode->height < node->height + 1)
-            node->parentNode->height = node->height + 1;
-        node = node->parentNode;
+bool updateHeights(Node* node) { // update the heights of parent nodes, starting from "node" all the way to the root
+    while (node->parentNode!=nullptr) { //we reached the root node
+        if (node->parentNode->height < node->height + 1) //the node might not need an update of the height, so we have to check
+            node->parentNode->height = node->height + 1; //update the parent node's height, by increasing it by 1 from node
+        node = node->parentNode; //continue "climbing" the tree
     }
     return true;
 }

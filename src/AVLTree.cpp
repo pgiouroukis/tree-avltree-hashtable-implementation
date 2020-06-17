@@ -1,7 +1,7 @@
 #include "AVLTree.h"
 #include <cmath>
 
-//just a utility function for printing the node. Helpful for debugging
+//just a utility function for printing the node. Helpful for debugging.
 void printNode(Node* node) {
     cout << "Word: " << node->word << " ||| Parent Word: " << (node->parentNode!= nullptr ? node->parentNode->word : "nullptr")
          << " ||| left Word: " << (node->leftNode!=nullptr ? node->leftNode->word : "nullptr")
@@ -84,30 +84,24 @@ void balance(Node* node, int LHeight, int RHeight) {
 
     if (LHeight > RHeight) {
 
-        //childLeftHeight = recursiveHeight(node->leftNode->leftNode);
+        //calculate the node's left and right node height, so the proper rotation(s) can be called
         childLeftHeight = nodeHeight(node->leftNode->leftNode);
-        //childRightHeight = recursiveHeight(node->leftNode->rightNode);
         childRightHeight = nodeHeight(node->leftNode->rightNode);
 
-        if (childLeftHeight >= childRightHeight) {
-            //cout<<"    Starting right rotate" << endl;
+        if (childLeftHeight >= childRightHeight)
             rightRotate(node);
-        } else {
-            //cout<<"    Starting left-right rotate" << endl;
+        else {
             leftRotate(node->leftNode);
             rightRotate(node);
         }
 
     } else {
-
         childLeftHeight = nodeHeight(node->rightNode->leftNode);
         childRightHeight = nodeHeight(node->rightNode->rightNode);
 
-        if (childRightHeight >= childLeftHeight ) {
-            //cout<<"    Starting left rotate" << endl;
+        if (childRightHeight >= childLeftHeight )
             leftRotate(node);
-        } else {
-            //cout<<"    Starting right-left rotate" << endl;
+        else {
             rightRotate(node->rightNode);
             leftRotate(node);
         }
@@ -132,18 +126,8 @@ void changeRoot(AVLTree *tree, int lheight, int rheight) {
     return;
 }
 
-//override the addWord method, so the balance of the nodes can be checked
-Node* AVLTree::addWord(string word){
-
-    int LHeight;
-    int RHeight;
-
-    //call the parent's add word method to add the word, then balance the tree
-    Node* addedNode = BTree::addWord(word);
-
-    //Create a 'node' variable, so we can 'climb' the tree to check if it needs balancing, without losing the recently added node
-    Node* node = addedNode;
-
+void balanceTree(Node* node, Node* root, AVLTree* tree) {
+    int LHeight,RHeight;
     //check if the tree needs balancing, by parsing it from the node added all the way to the root
     while (node != nullptr) {
         LHeight = nodeHeight(node->leftNode);
@@ -151,7 +135,7 @@ Node* AVLTree::addWord(string word){
         if ( abs(LHeight-RHeight) > 1 ) {
 
             //If the root node needs balancing, then, because of the rotations, we need to change the root of the tree.
-            if (node == root) changeRoot(this, LHeight, RHeight);
+            if (node == root) changeRoot(tree, LHeight, RHeight);
 
             //Balance the tree
             balance(node, LHeight, RHeight);
@@ -167,8 +151,50 @@ Node* AVLTree::addWord(string word){
         // 'Climb' one node up
         node = node->parentNode;
     }
+    return;
+}
+
+
+//override the addWord method, so the balance of the nodes can be checked
+Node* AVLTree::addWord(string word){
+
+    int LHeight;
+    int RHeight;
+
+    //call the parent's add word method to add the word, then balance the tree
+    Node* addedNode = BTree::addWord(word);
+
+    //Create a 'node' variable, so we can 'climb' the tree to check if it needs balancing, without losing the recently added node
+    Node* node = addedNode;
+
+    //we call the balanceTree function, which checks if the tree needs balancing,
+    //starting from the node all the way to root, and performs the balance if needed. It also changes the root of the tree if that's needed.
+    balanceTree(node,root,this);
 
     //Return the initialNode
     return addedNode;
 }
 
+bool AVLTree::deleteWord(string word) {
+
+    //first we try to find the word for deletion
+    Node* node = this->findWord(word);
+
+    //if the word exists, we will now delete it.
+    if (node!=nullptr) {
+
+        //we keep the parent of the node to be deleted, so we can start the balance process
+        Node* parentNode = node->parentNode;
+
+        //we then delete the word using the BTree::deleteWord method
+        BTree::deleteWord(word);
+
+        //we perform the balance process if the parentNode is not nullptr
+        if (parentNode!=nullptr)
+            balanceTree(node,root,this);
+
+        return true;
+
+    } else return false;
+
+}

@@ -19,24 +19,24 @@ Hashtable::~Hashtable()
     delete[] B;
 }
 
-void Hashtable::setA(int Size) //Constraction of array wich contains the words
+void Hashtable::setA(int Size) //Construction of an array which contains the words
 {
     int i;
 
     A = new string[Size];
 
     for (i=0;i<Size;i++)
-        A[i]="-";           //Each posistion of the array contains an "-" when it is empty
+        A[i]="-";           //Each position of the array contains a "-" when it is empty
 }
 
-void Hashtable::setB(int Size) //Constraction of array wich contains the times each word is found in the text
+void Hashtable::setB(int Size) //Construction of an array which contains the occurrences of each word found in the text
 {
     int i;
 
     B = new int[Size];
 
     for (i=0;i<Size;i++)
-        B[i]=0;            //All positions of this array is set to 0 since threre no words given yet.
+        B[i]=0;            //All positions of this array is set to 0 since there are no words given yet.
 }
 
 bool Hashtable::addWord(string A_word)
@@ -50,13 +50,13 @@ bool Hashtable::addWord(string A_word)
         A[startPos]=A_word;
         B[startPos]++;
     }
-    else if(A[startPos]==A_word) //If the same word as the one given is already in this posistion the +1 is added in
-        B[startPos]++;           //the frequency array is added
+    else if(A[startPos]==A_word) //If the same word as the one given is already in this position, then +1 is added in
+        B[startPos]++;           //the frequency array
 
     else
     {
-                                                //The last case checked is if another word than the one given has the same hash value therfore being set
-        while (A[i]!="-" && A[i]!=A_word)       //in the same posistion. In this case the program starts searching all the positions after it until it finds
+                                                //The last case checked is if another word than the one given has the same hash value therefore being set
+        while (A[i]!="-" && A[i]!=A_word)       //in the same position. In this case the program starts searching all the positions after it until it finds
         {                                       //an empty spot("-"), where it sets it.
             i++;
             if (i>Size-1)
@@ -76,18 +76,16 @@ int Hashtable::findWord(string A_word)
         startPos=HashFunction(A_word,Size);
         i=startPos;
 
-        if (A[startPos]=="-")      //If the hash position of the word is empty then then there is no way the word is in this array, thus the search
-            {                     // is unsuccesful
-                //cout<<"Word " << A_word << " not found!"<<endl;
+        if (A[startPos]=="-")       //If the hash position of the word is empty then then there is no way the word is in this array, thus the search
+            {                       // is unsuccessful
                 return -1;
             }
 
         while(!found) //found is a guard variable which signals the stop of the while loop if the word is found inside the array
         {
 
-            if (A[i]==A_word) //If the word is in its hash posistion then we print the appropriate message
+            if (A[i]==A_word) //If the word is in its hash position then we print the appropriate message
             {
-                //cout<<"The word "<<A_word<<" was found in position "<<i<<", "<<B[i]<<" times."<<endl;
                 return B[i];
             }
             else
@@ -97,9 +95,8 @@ int Hashtable::findWord(string A_word)
                 if (i>Size-1) //if it reaches the end then it goes on from the start of the array
                     i=0;
 
-                if (i==startPos) //Finally if the program does a full circle and still did not find the word, then the search was unsuccesfull
+                if (i==startPos) //Finally if the program does a full circle and still did not find the word, then the search was unsuccessful
                 {
-                    //cout<<"Word " << A_word << " not found!"<<endl;
                     return B[i];
                 }
             }
@@ -109,7 +106,7 @@ int Hashtable::findWord(string A_word)
 
 }
 
-int HashFunction(string a,int Size) //This function recieves a string and the size of the array B and returns an integer
+int HashFunction(string a,int Size) //This function receives a string and the size of the array B and returns an integer
 {                                   //that shows where the word should be placed on the word array.
     int seed = 151;
     unsigned long hash = 0;
