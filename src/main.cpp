@@ -167,11 +167,11 @@ int CountWords(string FileName){
     //open the file
     ifstream file(FileName);
 
-    //declare some variables
+    //declare and init some variables
     string linestr;
     string word;
-    int sum;
-    unsigned int i;
+    int sum = 0;
+    unsigned int i = 0;
 
     cout<< "Counting the number of words in the text file..."<<endl;
 
