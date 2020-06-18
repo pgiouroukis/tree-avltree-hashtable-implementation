@@ -13,10 +13,10 @@
 using namespace std;
 
 //declaring some function here, implementing them at the bottom
-bool addToQ(int sum, int WordsInQ);                                              //determine whether a word should be added to Q, randomly
+bool addToQ(int sum, int WordsInQ); //determine whether a word should be added to Q, randomly
 void printSomeOccurrences(int step, string *Q, int QcurrentWords, Hashtable *, AVLTree *, BTree *); //print some occurrences of Q, based on a "step", for all three of the DataStructures
-void printTimeComparison(string *Q, int QcurrentWords, Hashtable *, AVLTree *, BTree *);            //compare the search time against Q for all the Data Structures
-int CountWords(string filename);                                                 //count the words from the file given
+void printTimeComparison(string *Q, int QcurrentWords, Hashtable *, AVLTree *, BTree *); //compare the search time against Q for all the Data Structures
+int CountWords(string filename); //count the words from the file given
 
 int main()
 {
@@ -102,39 +102,42 @@ int main()
     cout << endl;
 
     printSomeOccurrences(100, Q, WordsInQ-1, &hashtable, &avlTree, &bTree);
+
     cout << "------------------------------------------------------" << endl;
     printTimeComparison(Q, WordsInQ-1,&hashtable, &avlTree, &bTree);
+    cout << "------------------------------------------------------" << endl;
 
     return 0;
 }
 
 void printTimeComparison(string *Q, int QcurrentWords, Hashtable *a, AVLTree *atree, BTree *tree)
 {
-
     //declaring the variables from the chrono library
     std::chrono::steady_clock::time_point begin;
     std::chrono::steady_clock::time_point end;
+
+    cout << "Searching " << QcurrentWords + 1 << " words in each data structure..." << endl;
 
     //measure the time for the Hashtable
     begin = std::chrono::steady_clock::now();
     for (int i = 0; i < QcurrentWords; i++)
         a->findWord(Q[i]);
     end = std::chrono::steady_clock::now();
-    cout << "Time In HashTable : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
+    cout << "Time for HashTable : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
 
     //measure the time for the AVL Tree
     begin = std::chrono::steady_clock::now();
     for (int i = 0; i < QcurrentWords; i++)
         atree->findWord(Q[i]);
     end = std::chrono::steady_clock::now();
-    cout << "Time In AVL Tree : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
+    cout << "Time for AVL Tree : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
 
     //measure the time for the Binary Search Tree
     begin = std::chrono::steady_clock::now();
     for (int i = 0; i < QcurrentWords; i++)
         tree->findWord(Q[i]);
     end = std::chrono::steady_clock::now();
-    cout << "Time In Binary Search Tree : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
+    cout << "Time for Binary Search Tree : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
 }
 
 void printSomeOccurrences(int step, string *Q, int QcurrentWords, Hashtable *a, AVLTree *atree, BTree *tree)
