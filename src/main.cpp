@@ -117,21 +117,21 @@ void printTimeComparison(string *Q, int QcurrentWords, Hashtable *a, AVLTree *at
 
     //measure the time for the Hashtable
     begin = std::chrono::steady_clock::now();
-    for (int i = 0; i < QSIZE; i++)
+    for (int i = 0; i < QcurrentWords; i++)
         a->findWord(Q[i]);
     end = std::chrono::steady_clock::now();
     cout << "Time In HashTable : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
 
     //measure the time for the AVL Tree
     begin = std::chrono::steady_clock::now();
-    for (int i = 0; i < QSIZE; i++)
+    for (int i = 0; i < QcurrentWords; i++)
         atree->findWord(Q[i]);
     end = std::chrono::steady_clock::now();
     cout << "Time In AVL Tree : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
 
     //measure the time for the Binary Search Tree
     begin = std::chrono::steady_clock::now();
-    for (int i = 0; i < QSIZE; i++)
+    for (int i = 0; i < QcurrentWords; i++)
         tree->findWord(Q[i]);
     end = std::chrono::steady_clock::now();
     cout << "Time In Binary Search Tree : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
@@ -155,7 +155,7 @@ void printSomeOccurrences(int step, string *Q, int QcurrentWords, Hashtable *a, 
     t.endOfRow();
 
     //starting to search for some words in Q, in every data structure
-    for (i = QSIZE - 1; i > 0; i -= step)
+    for (i = 0; i < QcurrentWords; i += step)
     {
         t.add(" Word: " + Q[i]);
 
@@ -224,7 +224,7 @@ int CountWords(string FileName)
 
 bool addToQ(int pos, int WordsInQ)
 {
-    if (!(pos % 25) && WordsInQ < QSIZE)
+    if (!(pos % 10000) && WordsInQ < QSIZE)
         return true;
     return false;
 }
