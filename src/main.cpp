@@ -13,10 +13,10 @@
 using namespace std;
 
 //declaring some function here, implementing them at the bottom
-bool addToQ(int sum, int WordsInQ);                                             //determine whether a word should be added to Q, randomly
-void printSomeOccurrences(int step, string* Q, Hashtable*, AVLTree*, BTree*);   //print some occurrences of Q, based on a "step", for all three of the DataStructures
-void printTimeComparison(string *, Hashtable *, AVLTree *, BTree *);            //compare the search time against Q for all the Data Structures
-int CountWords(string filename);                                                //count the words from the file given
+bool addToQ(int sum, int WordsInQ); //determine whether a word should be added to Q, randomly
+void printSomeOccurrences(int step, string* Q, int QcurrentWords, Hashtable*, AVLTree*, BTree*); //print some occurrences of Q, based on a "step", for all three of the DataStructures
+void printTimeComparison(string *Q, int QcurrentWords, Hashtable *, AVLTree *, BTree *); //compare the search time against Q for all the Data Structures
+int CountWords(string filename); //count the words from the file given
 
 int main() {
 
@@ -88,14 +88,14 @@ int main() {
     file.close(); //closing the file
     cout<<endl;
 
-    printSomeOccurrences(100, Q, &hashtable, &avlTree, &bTree);
+    printSomeOccurrences(100, Q, WordsInQ-1, &hashtable, &avlTree, &bTree);
     cout << "------------------------------------------------------" << endl;
-    printTimeComparison(Q, &hashtable, &avlTree, &bTree);
+    printTimeComparison(Q, WordsInQ-1 , &hashtable, &avlTree, &bTree);
 
     return 0;
 }
 
-void printTimeComparison(string *Q, Hashtable *a, AVLTree *atree, BTree *tree) {
+void printTimeComparison(string *Q, int QcurrentWords, Hashtable *a, AVLTree *atree, BTree *tree) {
 
     //declaring the variables from the chrono library
     std::chrono::steady_clock::time_point begin;
@@ -103,21 +103,21 @@ void printTimeComparison(string *Q, Hashtable *a, AVLTree *atree, BTree *tree) {
 
     //measure the time for the Hashtable
     begin = std::chrono::steady_clock::now();
-    for (int i = 0; i < QSIZE; i++)
+    for (int i = 0; i < QcurrentWords; i++)
         a->findWord(Q[i]);
     end = std::chrono::steady_clock::now();
     cout << "Time In HashTable : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
 
     //measure the time for the AVL Tree
     begin = std::chrono::steady_clock::now();
-    for (int i = 0; i < QSIZE; i++)
+    for (int i = 0; i < QcurrentWords; i++)
         atree->findWord(Q[i]);
     end = std::chrono::steady_clock::now();
     cout << "Time In AVL Tree : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
 
     //measure the time for the Binary Search Tree
     begin = std::chrono::steady_clock::now();
-    for (int i = 0; i < QSIZE; i++)
+    for (int i = 0; i < QcurrentWords; i++)
         tree->findWord(Q[i]);
     end = std::chrono::steady_clock::now();
     cout << "Time In Binary Search Tree : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
@@ -125,7 +125,7 @@ void printTimeComparison(string *Q, Hashtable *a, AVLTree *atree, BTree *tree) {
 
 }
 
-void printSomeOccurrences(int step, string *Q, Hashtable *a, AVLTree *atree, BTree *tree) {
+void printSomeOccurrences(int step, string *Q, int QcurrentWords, Hashtable *a, AVLTree *atree, BTree *tree) {
 
     int num;
     int i;
@@ -142,7 +142,7 @@ void printSomeOccurrences(int step, string *Q, Hashtable *a, AVLTree *atree, BTr
     t.endOfRow();
 
     //starting to search for some words in Q, in every data structure
-    for (i = QSIZE - 1; i > 0; i -= step) {
+    for (i = 0; i < QcurrentWords; i += step) {
         t.add(" Word: " + Q[i]);
 
         //search the word in the hashtable and print the occurrences
@@ -203,7 +203,7 @@ int CountWords(string FileName){
 }
 
 bool addToQ(int pos, int WordsInQ) {
-    if (!(pos % 2) && WordsInQ < QSIZE)
+    if (!(pos % 25) && WordsInQ < QSIZE)
         return true;
     return false;
 }
