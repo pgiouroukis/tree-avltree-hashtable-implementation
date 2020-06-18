@@ -224,7 +224,7 @@ int CountWords(string FileName)
 
 bool addToQ(int pos, int WordsInQ)
 {
-    if (!(pos % 10000) && WordsInQ < QSIZE)
+    if (!(pos % 25) && WordsInQ < QSIZE)
         return true;
     return false;
 }
