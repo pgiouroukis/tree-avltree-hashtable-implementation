@@ -1,3 +1,4 @@
+
 #ifndef AVLTREE_H
 #define AVLTREE_H
 
@@ -9,18 +10,16 @@ using namespace std;
 
 class AVLTree : public BTree
 {
-    public:
-        AVLTree() {} // the default constructor from BTree is called
-        virtual ~AVLTree() {} //the default destructor from BTree is called
+public:
+    AVLTree() {}          // the default constructor from BTree is called
+    virtual ~AVLTree() {} //the default destructor from BTree is called
 
-        //the overriden methods from BTree
-        Node* addWord(string word);
-        bool deleteWord(string word);
+    //the overriden methods from BTree
+    Node *addWord(string word);
+    bool deleteWord(string word);
 
-
-    protected:
-
-    private:
+protected:
+private:
 };
 
 #endif // AVLTREE_H

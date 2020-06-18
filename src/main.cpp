@@ -13,12 +13,13 @@
 using namespace std;
 
 //declaring some function here, implementing them at the bottom
-bool addToQ(int sum, int WordsInQ); //determine whether a word should be added to Q, randomly
-void printSomeOccurrences(int step, string* Q, int QcurrentWords, Hashtable*, AVLTree*, BTree*); //print some occurrences of Q, based on a "step", for all three of the DataStructures
-void printTimeComparison(string *Q, int QcurrentWords, Hashtable *, AVLTree *, BTree *); //compare the search time against Q for all the Data Structures
-int CountWords(string filename); //count the words from the file given
+bool addToQ(int sum, int WordsInQ);                                              //determine whether a word should be added to Q, randomly
+void printSomeOccurrences(int step, string *Q, Hashtable *, AVLTree *, BTree *); //print some occurrences of Q, based on a "step", for all three of the DataStructures
+void printTimeComparison(string *, Hashtable *, AVLTree *, BTree *);             //compare the search time against Q for all the Data Structures
+int CountWords(string filename);                                                 //count the words from the file given
 
-int main() {
+int main()
+{
 
     //parse the file to get the number of words
     int sum = CountWords("small-file.txt");
@@ -30,32 +31,34 @@ int main() {
 
     //create an array Q, with a size of QSIZE
     string *Q = new string[QSIZE];
-    int WordsInQ=0;
+    int WordsInQ = 0;
 
-    int sum = 0;
-    unsigned int i;
-
-    sum=CountWords("small-file.txt");
-    Hashtable hashtable(sum);
-
-
+    //open the file
     ifstream file("small-file.txt");
 
     //declare the rest of the variables
-    unsigned int i;     //counter for the loops
-    string linestr;     //used to get every line of the file as a string
-    string word;        //keeps the word that we will insert in the data structures
-    int line = 0;       //the file line we are currently reading
-    int loaderCount=0;  //for the loader animation
-    int pos = 0;        // the number of word we are currently reading
+    unsigned int i;      //counter for the loops
+    string linestr;      //used to get every line of the file as a string
+    string word;         //keeps the word that we will insert in the data structures
+    int line = 0;        //the file line we are currently reading
+    int loaderCount = 0; //for the loader animation
+    int pos = 0;         // the number of word we are currently reading
 
-    sum=0;
-    while ( getline(file, linestr) ) {
+    //start inserting words to the data structures
+
+    //scan the file line by line
+    while (getline(file, linestr))
+    {
         //just a silly animation counter, ignore it
-        if ( (line++) % 10000 == 0) {
+        if ((line++) % 10000 == 0)
+        {
             loaderCount++;
-            cout << '\r' << flush << "Reading the words... |" ;
-            for (int i=0;i<6;i++) if (i<loaderCount) cout << "+++++++++"; else cout << "         ";
+            cout << '\r' << flush << "Reading the words... |";
+            for (int i = 0; i < 6; i++)
+                if (i < loaderCount)
+                    cout << "+++++++++";
+                else
+                    cout << "         ";
             cout << "|  ";
         }
 
@@ -65,41 +68,48 @@ int main() {
         word = ""; //initialize an empty "word"
 
         //start scanning the line character by character
-        for (i=0; i<linestr.length(); i++) {
+        for (i = 0; i < linestr.length(); i++)
+        {
 
             //append to "word" if the character read is a letter or number (ignoring punctuation and special characters)
             if (isalpha(linestr[i]))
-                word.append(string(1,linestr[i]));
-            else { //otherwise, it reached the end of a word.
+                word.append(string(1, linestr[i]));
+            else
+            { //otherwise, it reached the end of a word.
 
-                if (word!="") { // if the "word" variable is not empty, there is a word to add
-                    bTree.addWord(word);        //add the word to the bTree
-                    avlTree.addWord(word);      //add the word to the avlTree
-                    hashtable.addWord(word);    //add the word to the hash table
+                if (word != "")
+                {                            // if the "word" variable is not empty, there is a word to add
+                    bTree.addWord(word);     //add the word to the bTree
+                    avlTree.addWord(word);   //add the word to the avlTree
+                    hashtable.addWord(word); //add the word to the hash table
 
                     pos++; //increase the pos variable
 
-                    if ( addToQ(pos,WordsInQ) ) { //determine if the word should be added to Q
-                        Q[WordsInQ]=word; //add the word to Q
+                    if (addToQ(pos, WordsInQ))
+                    {                       //determine if the word should be added to Q
+                        Q[WordsInQ] = word; //add the word to Q
                         WordsInQ++;
                     }
-                } else continue; //otherwise, we continue with the next character
+                }
+                else
+                    continue; //otherwise, we continue with the next character
 
                 word = ""; //reseting the "word" variable
             }
         }
     }
     file.close(); //closing the file
-    cout<<endl;
+    cout << endl;
 
-    printSomeOccurrences(100, Q, WordsInQ-1, &hashtable, &avlTree, &bTree);
+    printSomeOccurrences(100, Q, &hashtable, &avlTree, &bTree);
     cout << "------------------------------------------------------" << endl;
-    printTimeComparison(Q, WordsInQ-1 , &hashtable, &avlTree, &bTree);
+    printTimeComparison(Q, &hashtable, &avlTree, &bTree);
 
     return 0;
 }
 
-void printTimeComparison(string *Q, int QcurrentWords, Hashtable *a, AVLTree *atree, BTree *tree) {
+void printTimeComparison(string *Q, Hashtable *a, AVLTree *atree, BTree *tree)
+{
 
     //declaring the variables from the chrono library
     std::chrono::steady_clock::time_point begin;
@@ -107,29 +117,28 @@ void printTimeComparison(string *Q, int QcurrentWords, Hashtable *a, AVLTree *at
 
     //measure the time for the Hashtable
     begin = std::chrono::steady_clock::now();
-    for (int i = 0; i < QcurrentWords; i++)
+    for (int i = 0; i < QSIZE; i++)
         a->findWord(Q[i]);
     end = std::chrono::steady_clock::now();
     cout << "Time In HashTable : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
 
     //measure the time for the AVL Tree
     begin = std::chrono::steady_clock::now();
-    for (int i = 0; i < QcurrentWords; i++)
+    for (int i = 0; i < QSIZE; i++)
         atree->findWord(Q[i]);
     end = std::chrono::steady_clock::now();
     cout << "Time In AVL Tree : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
 
     //measure the time for the Binary Search Tree
     begin = std::chrono::steady_clock::now();
-    for (int i = 0; i < QcurrentWords; i++)
+    for (int i = 0; i < QSIZE; i++)
         tree->findWord(Q[i]);
     end = std::chrono::steady_clock::now();
     cout << "Time In Binary Search Tree : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
-
-
 }
 
-void printSomeOccurrences(int step, string *Q, int QcurrentWords, Hashtable *a, AVLTree *atree, BTree *tree) {
+void printSomeOccurrences(int step, string *Q, Hashtable *a, AVLTree *atree, BTree *tree)
+{
 
     int num;
     int i;
@@ -146,7 +155,8 @@ void printSomeOccurrences(int step, string *Q, int QcurrentWords, Hashtable *a, 
     t.endOfRow();
 
     //starting to search for some words in Q, in every data structure
-    for (i = 0; i < QcurrentWords; i += step) {
+    for (i = QSIZE - 1; i > 0; i -= step)
+    {
         t.add(" Word: " + Q[i]);
 
         //search the word in the hashtable and print the occurrences
@@ -166,42 +176,42 @@ void printSomeOccurrences(int step, string *Q, int QcurrentWords, Hashtable *a, 
     return;
 }
 
-bool addToQ(int sum, int WordsInQ) {
-    if (!(sum % 10) && WordsInQ < QSIZE)
-        return true;
-    return false;
-}
-
-int CountWords(string FileName){
+int CountWords(string FileName)
+{
 
     //open the file
     ifstream file(FileName);
 
-    //declare and init some variables
+    //declare some variables
     string linestr;
     string word;
-    int sum = 0;
-    unsigned int i = 0;
+    int sum;
+    unsigned int i;
 
-    cout<< "Counting the number of words in the text file..."<<endl;
+    cout << "Counting the number of words in the text file..." << endl;
 
     //scan the file line by line
-    while ( getline(file, linestr) ) {
+    while (getline(file, linestr))
+    {
         linestr.append(".");
 
         word = "";
 
         //start scanning the line character by character
-        for (i=0; i<linestr.length(); i++) {
+        for (i = 0; i < linestr.length(); i++)
+        {
 
             //append to "word" if the character is a letter or number
             if (isalpha(linestr[i]))
-                word.append(string(1,linestr[i]));
-            else { //otherwise, it reached the end of a word.
+                word.append(string(1, linestr[i]));
+            else
+            { //otherwise, it reached the end of a word.
 
                 //if the "word" is not empty, increase the sum
-                if (word!="") sum++;
-                else continue; //otherwise, continue scanning the file
+                if (word != "")
+                    sum++;
+                else
+                    continue; //otherwise, continue scanning the file
                 word = "";
             }
         }
@@ -212,8 +222,9 @@ int CountWords(string FileName){
     return sum;
 }
 
-bool addToQ(int pos, int WordsInQ) {
-    if (!(pos % 25) && WordsInQ < QSIZE)
+bool addToQ(int pos, int WordsInQ)
+{
+    if (!(pos % 2) && WordsInQ < QSIZE)
         return true;
     return false;
 }

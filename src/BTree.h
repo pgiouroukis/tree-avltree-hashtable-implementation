@@ -5,7 +5,8 @@
 
 using namespace std;
 
-struct Node { //declaration of the Node struct
+struct Node
+{ //declaration of the Node struct
     string word;
     int occurrences;
     Node *leftNode;
@@ -14,29 +15,28 @@ struct Node { //declaration of the Node struct
     int height;
 };
 
-class BTree {
-    public:
-        BTree();
-        virtual ~BTree();
+class BTree
+{
+public:
+    BTree();
+    virtual ~BTree();
 
-        Node* getRoot() {return root;}
+    Node *getRoot() { return root; }
 
-        virtual Node* addWord(string w); //let the addWord method to be overridden
-        virtual bool deleteWord(string w); //let the deleteWord method to be overridden
-        Node* findWord(string w);
+    virtual Node *addWord(string w);   //let the addWord method to be overridden
+    virtual bool deleteWord(string w); //let the deleteWord method to be overridden
+    Node *findWord(string w);
 
-        void printInOrder();
-        void printPostOrder();
-        void printPreOrder();
+    void printInOrder();
+    void printPostOrder();
+    void printPreOrder();
 
-        Node *root;
+    Node *root;
 
-    protected:
-
-    private:
-
+protected:
+private:
 };
 
-bool updateHeights(Node*);
+bool updateHeights(Node *);
 
 #endif // BTREE_H
