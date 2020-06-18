@@ -2,9 +2,14 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
+	<File name="BTree.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="203" topLine="0" />
+		</Cursor>
+	</File>
 	<File name="Hashtable.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3654" topLine="49" />
+			<Cursor1 position="2387" topLine="50" />
 		</Cursor>
 	</File>
 	<File name="AVLTree.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -12,30 +17,25 @@
 			<Cursor1 position="74" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="BTree.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2013" topLine="27" />
-		</Cursor>
-	</File>
-	<File name="Hashtable.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="341" topLine="0" />
-		</Cursor>
-	</File>
 	<File name="TestClass.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="3654" topLine="49" />
 		</Cursor>
 	</File>
+	<File name="BTree.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2013" topLine="27" />
+		</Cursor>
+	</File>
+	<File name="Hashtable.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="234" topLine="0" />
+		</Cursor>
+	</File>
 	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3856" topLine="123" />
+			<Cursor1 position="3954" topLine="132" />
 		</Cursor>
 	</File>
-	<File name="BTree.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="203" topLine="0" />
-		</Cursor>
-	</File>
-	<EditorTabsLayout layout="bc1c59405ee4c23f0016b15100000002=*0;NeoDomes:main.cpp,1;NeoDomes:Hashtable.cpp,2;NeoDomes:BTree.cpp,3;NeoDomes:BTree.h,4;NeoDomes:AVLTree.h@layout2|name=dummy;caption=;state=2098174;dir=3;layer=0;row=0;pos=0;prop=100000;bestw=776;besth=428;minw=776;minh=428;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=bc1c59405ee4c23f0016b15100000002;caption=;state=2098172;dir=5;layer=0;row=0;pos=0;prop=100000;bestw=200;besth=200;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|dock_size(5,0,0)=202|" />
+	<EditorTabsLayout layout="c138c4005ee9fb80002212c100000002=*0;NeoDomes:main.cpp,1;NeoDomes:Hashtable.cpp,2;NeoDomes:BTree.cpp,3;NeoDomes:BTree.h,4;NeoDomes:AVLTree.h,5;NeoDomes:Hashtable.h@layout2|name=dummy;caption=;state=2098174;dir=3;layer=0;row=0;pos=0;prop=100000;bestw=776;besth=428;minw=776;minh=428;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=c138c4005ee9fb80002212c100000002;caption=;state=2098172;dir=5;layer=0;row=0;pos=0;prop=100000;bestw=200;besth=200;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|dock_size(5,0,0)=202|" />
 </CodeBlocks_layout_file>

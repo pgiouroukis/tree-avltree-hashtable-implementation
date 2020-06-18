@@ -31,8 +31,6 @@ int main() {
 
     sum=CountWords("small-file.txt");
     Hashtable hashtable(sum);
-    cout<<sum<<endl;
-
 
 
     ifstream file("small-file.txt");
@@ -42,7 +40,7 @@ int main() {
     int line = 0;
     int loaderCount=0;
 
-    //sum=0;
+    sum=0;
     while ( getline(file, linestr) ) {
         if (line % 10000 == 0) {
             loaderCount++;
@@ -147,7 +145,7 @@ void printSomeOccurences(int step, string *Q, Hashtable *a, AVLTree *atree, BTre
 }
 
 bool addToQ(int sum, int WordsInQ) {
-    if (!(sum % 2) && WordsInQ < QSIZE)
+    if (!(sum % 10) && WordsInQ < QSIZE)
         return true;
     return false;
 }
