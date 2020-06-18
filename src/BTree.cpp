@@ -4,6 +4,8 @@
 
 using namespace std;
 
+void postOrderDeleteNodes(Node*);
+
 BTree::BTree() { //initialize the tree
     //ctor
     root = nullptr;
@@ -11,12 +13,15 @@ BTree::BTree() { //initialize the tree
 
 BTree::~BTree() {
     //dtor
+    postOrderDeleteNodes(root);
+    delete root;
+    return;
 }
 
 Node* newNode(string w, Node* parent){ //initialize a node by setting the proper attributes
     Node *node = new Node;
     node->word = w;
-    node->occurences = 1;
+    node->occurrences = 1;
     node->leftNode = nullptr;
     node->rightNode = nullptr;
     node->parentNode = parent;
@@ -41,7 +46,7 @@ Node* BTree::addWord(string w) {
 
             if( w.compare(ptr->word) == 0) {        //if the word we are trying to add is already in the tree...
 
-                ptr->occurences++;                  //...we just increase the number of occurrences...
+                ptr->occurrences++;                  //...we just increase the number of occurrences...
                 return ptr;                         //...and we return the pointer to the existing node
 
             } else if (w.compare(ptr->word) < 0) {  //if the word we are trying to add is "smaller" than the current word we are at...
@@ -213,7 +218,7 @@ void inOrder(Node *n) { //recursive inOrder traversal, starting from node n
 
     inOrder(n->leftNode);
 
-    cout << "Word: " << n->word << " | Occurences: " << n->occurences << endl;
+    cout << "Word: " << n->word << " | occurrences: " << n->occurrences << endl;
 
     inOrder(n->rightNode);
 
@@ -241,7 +246,7 @@ void postOrder(Node *n) { //recursive postOrder traversal, starting from node n
 
     postOrder(n->rightNode);
 
-    cout << "Word: " << n->word << " | Occurences: " << n->occurences << endl;
+    cout << "Word: " << n->word << " | occurrences: " << n->occurrences << endl;
 
     return;
 
@@ -263,7 +268,7 @@ void preOrder(Node *n) { //recursive preOrder traversal, starting from node n
 
     if (n == nullptr) return;
 
-    cout << "Word: " << n->word << " | Occurences: " << n->occurences << endl;
+    cout << "Word: " << n->word << " | occurrences: " << n->occurrences << endl;
 
     preOrder(n->leftNode);
 
@@ -294,4 +299,15 @@ bool updateHeights(Node* node) { // update the heights of parent nodes, starting
         node = node->parentNode; //continue "climbing" the tree
     }
     return true;
+}
+
+void postOrderDeleteNodes(Node* n) {
+    if (n == nullptr)
+        return;
+        
+    postOrderDeleteNodes(n->leftNode);
+
+    postOrderDeleteNodes(n->rightNode);
+
+    delete n;
 }

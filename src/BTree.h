@@ -7,7 +7,7 @@ using namespace std;
 
 struct Node { //declaration of the Node struct
     string word;
-    int occurences;
+    int occurrences;
     Node *leftNode;
     Node *rightNode;
     Node *parentNode;

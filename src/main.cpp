@@ -14,7 +14,7 @@
 using namespace std;
 
 bool addToQ(int sum, int WordsInQ);                                             //add a sample word to Q
-void printSomeOccurences(int step, string* Q, Hashtable*, AVLTree*, BTree*);    //print some occurrences of Q, based on "step", from all the DataStructures created
+void printSomeOccurrences(int step, string* Q, Hashtable*, AVLTree*, BTree*);    //print some occurrences of Q, based on "step", from all the DataStructures created
 void printTimeComparison(string *, Hashtable *, AVLTree *, BTree *);            //compare the search time against Q for all the Data Structures
 int CountWords(string filename);                                                //count the words from the file
 
@@ -41,7 +41,7 @@ int main() {
     int line = 0;
     int loaderCount=0;
 
-    int pos = 0;
+    int pos = 0; // the number of word we are currently reading
 
     //start inserting words to the data structures
     while ( getline(file, linestr) ) {
@@ -66,9 +66,9 @@ int main() {
                     avlTree.addWord(word);      //add the word to the avlTree
                     hashtable.addWord(word);    //add the word to the hash table
 
-                    pos++;
+                    pos++; //
 
-                    if (addToQ(pos,WordsInQ)) { //determine if the word should be added to Q
+                    if ( addToQ(pos,WordsInQ) ) { //determine if the word should be added to Q
                         Q[WordsInQ]=word;
                         WordsInQ++;
                     }
@@ -79,7 +79,7 @@ int main() {
         }
     }
 
-    printSomeOccurences(100, Q, &hashtable, &avlTree, &bTree);
+    printSomeOccurrences(100, Q, &hashtable, &avlTree, &bTree);
 
     cout << "------------------------------------" << endl;
 
@@ -119,7 +119,7 @@ void printTimeComparison(string *Q, Hashtable *a, AVLTree *atree, BTree *tree) {
 
 }
 
-void printSomeOccurences(int step, string *Q, Hashtable *a, AVLTree *atree, BTree *tree) {
+void printSomeOccurrences(int step, string *Q, Hashtable *a, AVLTree *atree, BTree *tree) {
     int num;
     int i;
 
@@ -137,10 +137,10 @@ void printSomeOccurences(int step, string *Q, Hashtable *a, AVLTree *atree, BTre
         t.add(" Hash Occs: " + to_string(num));
 
         node1 = atree->findWord(Q[i]);
-        t.add(" AVL Occs: " + to_string(node1->occurences));
+        t.add(" AVL Occs: " + to_string(node1->occurrences));
 
         node2 = tree->findWord(Q[i]);
-        t.add(" BTree Occs: " + to_string(node2->occurences));
+        t.add(" BTree Occs: " + to_string(node2->occurrences));
         t.endOfRow();
     }
     cout << t << endl;
