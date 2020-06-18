@@ -52,8 +52,8 @@ bool Hashtable::addWord(string A_word)
     else if (A[startPos] == A_word) //If the same word as the one given is already in this position, then +1 is added in
         B[startPos]++;              //the frequency array
 
-    else{
-                                                //The last case checked is if another word than the one given has the same hash value therefore being set
+    else
+    {                                         //The last case checked is if another word than the one given has the same hash value therefore being set
         while (A[i] != "-" && A[i] != A_word) //in the same position. In this case the program starts searching all the positions after it until it finds
         {                                     //an empty spot("-"), where it sets it.
             i++;
@@ -74,7 +74,7 @@ int Hashtable::findWord(string A_word)
     startPos = HashFunction(A_word, Size);
     i = startPos;
 
-    if (A[startPos] == "-") //If the hash position of the word is empty then then there is no way the word is in this array, thus the search
+    if (A[startPos] == "-") //If the hash position of the word is empty then then there is no way the word is in this array and the search
     {                       // is unsuccessful
         return -1;
     }
