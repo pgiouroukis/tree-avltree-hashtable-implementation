@@ -15,9 +15,6 @@ BTree::BTree()
 BTree::~BTree()
 {
     //dtor
-    postOrderDeleteNodes(root);
-    delete root;
-    return;
 }
 
 Node *newNode(string w, Node *parent)
@@ -340,16 +337,4 @@ bool updateHeights(Node *node)
         node = node->parentNode;                         //continue "climbing" the tree
     }
     return true;
-}
-
-void postOrderDeleteNodes(Node *n)
-{
-    if (n == nullptr)
-        return;
-
-    postOrderDeleteNodes(n->leftNode);
-
-    postOrderDeleteNodes(n->rightNode);
-
-    delete n;
 }

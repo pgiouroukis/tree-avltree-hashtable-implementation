@@ -14,8 +14,8 @@ using namespace std;
 
 //declaring some function here, implementing them at the bottom
 bool addToQ(int sum, int WordsInQ);                                              //determine whether a word should be added to Q, randomly
-void printSomeOccurrences(int step, string *Q, Hashtable *, AVLTree *, BTree *); //print some occurrences of Q, based on a "step", for all three of the DataStructures
-void printTimeComparison(string *, Hashtable *, AVLTree *, BTree *);             //compare the search time against Q for all the Data Structures
+void printSomeOccurrences(int step, string *Q, int QcurrentWords, Hashtable *, AVLTree *, BTree *); //print some occurrences of Q, based on a "step", for all three of the DataStructures
+void printTimeComparison(string *Q, int QcurrentWords, Hashtable *, AVLTree *, BTree *);            //compare the search time against Q for all the Data Structures
 int CountWords(string filename);                                                 //count the words from the file given
 
 int main()
@@ -101,14 +101,14 @@ int main()
     file.close(); //closing the file
     cout << endl;
 
-    printSomeOccurrences(100, Q, &hashtable, &avlTree, &bTree);
+    printSomeOccurrences(100, Q, WordsInQ-1, &hashtable, &avlTree, &bTree);
     cout << "------------------------------------------------------" << endl;
-    printTimeComparison(Q, &hashtable, &avlTree, &bTree);
+    printTimeComparison(Q, WordsInQ-1,&hashtable, &avlTree, &bTree);
 
     return 0;
 }
 
-void printTimeComparison(string *Q, Hashtable *a, AVLTree *atree, BTree *tree)
+void printTimeComparison(string *Q, int QcurrentWords, Hashtable *a, AVLTree *atree, BTree *tree)
 {
 
     //declaring the variables from the chrono library
@@ -137,7 +137,7 @@ void printTimeComparison(string *Q, Hashtable *a, AVLTree *atree, BTree *tree)
     cout << "Time In Binary Search Tree : " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << " microseconds" << std::endl;
 }
 
-void printSomeOccurrences(int step, string *Q, Hashtable *a, AVLTree *atree, BTree *tree)
+void printSomeOccurrences(int step, string *Q, int QcurrentWords, Hashtable *a, AVLTree *atree, BTree *tree)
 {
 
     int num;
@@ -185,8 +185,8 @@ int CountWords(string FileName)
     //declare some variables
     string linestr;
     string word;
-    int sum;
     unsigned int i;
+    int sum = 0;
 
     cout << "Counting the number of words in the text file..." << endl;
 
