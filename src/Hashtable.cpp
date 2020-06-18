@@ -23,7 +23,7 @@ void Hashtable::setA(int Size){ //Constraction of array wich contains the words
     A = new string[Size];
 
     for (i=0;i<Size;i++)
-        A[i]="-";           //Each posistion of the array contains an "-" when it is empty
+        A[i]="-";           //Each position of the array contains a "-" when it is empty
 }
 
 void Hashtable::setB(int Size){ //Constraction of array wich contains the times each word is found in the text
@@ -32,7 +32,7 @@ void Hashtable::setB(int Size){ //Constraction of array wich contains the times 
     B = new int[Size];
 
     for (i=0;i<Size;i++)
-        B[i]=0;            //All positions of this array is set to 0 since threre no words given yet.
+        B[i]=0;            //All positions of this array is set to 0 since there are no words given yet.
 }
 
 bool Hashtable::addWord(string A_word){
@@ -44,8 +44,8 @@ bool Hashtable::addWord(string A_word){
         A[startPos]=A_word;  //And +1 is added to the frequency array
         B[startPos]++;
     }
-    else if(A[startPos]==A_word) //If the same word as the one given is already in this posistion the +1 is added in
-        B[startPos]++;           //the frequency array is added
+    else if(A[startPos]==A_word) //If the same word as the one given is already in this position, then +1 is added in
+        B[startPos]++;           //the frequency array
 
     else{
         while (A[i]!="-" && A[i]!= A_word){ //The last case checked is if another word than the one given has the same hash value therfore being set
@@ -74,7 +74,8 @@ int Hashtable::findWord(string A_word){
 
         while(!found){ //found is a guard variable which signals the stop of the while loop if the word is found inside the array
 
-            if (A[i]==A_word) //If the word is in its hash posistion then we print the appropriate message
+            if (A[i]==A_word) //If the word is in its hash position then we print the appropriate message
+            {
                 return B[i];
             else{
                 i++;   //if this word is not found in that position then the program starts searching in the rest of the array to find it
@@ -103,4 +104,3 @@ int HashFunction(string a,int Size){  //This function recieves a string and the 
 
     return hash % Size;
 }
-
