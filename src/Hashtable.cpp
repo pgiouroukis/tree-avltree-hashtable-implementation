@@ -71,7 +71,7 @@ int Hashtable::findWord(string A_word)
     int startPos, i;
     bool found = 0;
 
-    startPos = HashFunction(A_word, Size);
+    startPos = HashFunction(A_word, Size); //The search always begins from the posistion the HashFunction returns
     i = startPos;
 
     if (A[startPos] == "-") //If the hash position of the word is empty then then there is no way the word is in this array and the search
