@@ -158,7 +158,7 @@ void printSomeOccurrences(int step, string *Q, int QcurrentWords, Hashtable *a, 
     t.endOfRow();
 
     //starting to search for some words in Q, in every data structure
-    for (i=0; i < QcurrentWords; i += step)
+    for (i = 0; i < QcurrentWords; i += step)
     {
         t.add(" Word: " + Q[i]);
 
